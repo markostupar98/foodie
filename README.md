@@ -13,3 +13,5 @@ Frontend:
 src/screens: Contains all the screen components like Home, Restaurant, Cart, and Delivery screens. src/components: Reusable UI components used across the application. src/navigation: Navigation configuration using React Navigation. src/services: API service handlers for backend communication. src/lib: Utility functions and constants. Backend:
 
 controllers: Business logic for handling requests. routes: API route definitions. services: Interaction with the database and external services. prisma: Database schema and Prisma client. FoodieGo is designed to make food ordering simple, fast, and enjoyable. Whether you're a user looking to satisfy your hunger or a driver delivering smiles, FoodieGo has got you covered.
+
+bg-gradient-to-r from-green-400 via-green-500 to-green-600 p-3
