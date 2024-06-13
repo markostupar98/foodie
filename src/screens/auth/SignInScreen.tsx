@@ -9,7 +9,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {setUser} from '../../store/slice/userSlice';
 import Background from '../../components/Background';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
-import {RootStackParamList} from '../../components/types/RootStockParams';
+import {RootStackParamList} from '../../types/RootStockParams';
 
 const SignInScreen: React.FC = () => {
   const [email, setEmail] = useState<string>('');

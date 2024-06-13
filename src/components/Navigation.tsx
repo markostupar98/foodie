@@ -12,17 +12,17 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="WelcomeScreen"
           component={WelcomeScreen}
           options={{headerShown: false}}
-        />
+        /> */}
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{headerShown: false}}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="SignInScreen"
           component={SignInScreen}
           options={{headerShown: false}}
@@ -31,7 +31,7 @@ const Navigation = () => {
           name="SignUpScreen"
           component={SignUpScreen}
           options={{headerShown: false}}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

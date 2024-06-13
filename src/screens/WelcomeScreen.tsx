@@ -6,7 +6,7 @@ import Background from '../components/Background';
 import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../components/types/RootStockParams';
+import {RootStackParamList} from '../types/RootStockParams';
 
 type WelcomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
