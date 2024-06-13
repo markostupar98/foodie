@@ -14,9 +14,9 @@ import Navigation from './src/components/Navigation';
 
 const App = () => {
   return (
-    // <Provider store={store}>
-    <Navigation />
-    // </Provider>
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
   );
 };
 

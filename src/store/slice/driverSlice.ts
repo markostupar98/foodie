@@ -1,14 +1,22 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-export const driverSlice = createSlice({
+interface DriverState {
+  id: string | null;
+  token: string | null;
+  isLoggedIn: boolean;
+}
+
+const initialState: DriverState = {
+  id: null,
+  token: null,
+  isLoggedIn: false,
+};
+
+const driverSlice = createSlice({
   name: 'driver',
-  initialState: {
-    id: null,
-    token: null,
-    isLoggedIn: false,
-  },
+  initialState,
   reducers: {
-    setDriver: (state, action) => {
+    setDriver: (state, action: PayloadAction<{id: string; token: string}>) => {
       state.id = action.payload.id;
       state.token = action.payload.token;
       state.isLoggedIn = true;

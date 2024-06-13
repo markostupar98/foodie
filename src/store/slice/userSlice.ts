@@ -1,14 +1,22 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-export const userSlice = createSlice({
+interface UserState {
+  id: string | null;
+  token: string | null;
+  isLoggedIn: boolean;
+}
+
+const initialState: UserState = {
+  id: null,
+  token: null,
+  isLoggedIn: false,
+};
+
+const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    id: null,
-    token: null,
-    isLoggedIn: false,
-  },
+  initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (state, action: PayloadAction<{id: string; token: string}>) => {
       state.id = action.payload.id;
       state.token = action.payload.token;
       state.isLoggedIn = true;
