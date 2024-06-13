@@ -17,7 +17,7 @@ const SignInScreen: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // Password hide func
   const toggleShowPassword = () => {
@@ -25,31 +25,31 @@ const SignInScreen: React.FC = () => {
   };
 
   // // Sign in func
-  // const signInWithEmail = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await axios.post(
-  //       'http://192.168.1.224:3000/api/auth/signin',
-  //       {
-  //         email,
-  //         password,
-  //       },
-  //     );
-  //     const {token, userId} = response.data; // Pretpostavimo da backend šalje ovo
+  const signInWithEmail = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        'http://10.0.2.2:3000/api/auth/signin',
+        {
+          email,
+          password,
+        },
+      );
+      const {token, userId} = response.data; // Pretpostavimo da backend šalje ovo
 
-  //     setLoading(false);
+      setLoading(false);
 
-  //     if (response.data) {
-  //       dispatch(setUser({id: userId, token: token}));
-  //       navigation.navigate('HomeScreen');
-  //     } else {
-  //       Alert.alert('Login Failed', 'Invalid credentials');
-  //     }
-  //   } catch (error: any) {
-  //     setLoading(false);
-  //     Alert.alert('Error', error.message);
-  //   }
-  // };
+      if (response.data) {
+        dispatch(setUser({id: userId, token: token}));
+        navigation.navigate('HomeScreen');
+      } else {
+        Alert.alert('Login Failed', 'Invalid credentials');
+      }
+    } catch (error: any) {
+      setLoading(false);
+      Alert.alert('Error', error.message);
+    }
+  };
 
   return (
     <Background>
@@ -71,7 +71,7 @@ const SignInScreen: React.FC = () => {
               value={email}
               onChangeText={setEmail}
               placeholder="Email"
-              className="border border-neutral-300 mb-8 mx-5 rounded-lg h-10 p-2"
+              className="border text-neutral-900 border-neutral-300 mb-8 mx-5 rounded-lg h-10 p-2"
               keyboardType="email-address"
               autoCapitalize="none"
             />
@@ -82,7 +82,7 @@ const SignInScreen: React.FC = () => {
               value={password}
               onChangeText={setPassword}
               placeholder="Password"
-              className="h-10 flex-1 ml-2"
+              className="h-10 text-neutral-900 flex-1 ml-2"
               secureTextEntry={!showPassword}
             />
             <MaterialIcons
@@ -97,8 +97,8 @@ const SignInScreen: React.FC = () => {
         <View className="w-90 mx-7 my-2">
           <Button
             title="Sign In"
-            // onPress={signInWithEmail}
-            // disabled={loading}
+            onPress={signInWithEmail}
+            disabled={loading}
           />
         </View>
         <View className="items-center my-2">

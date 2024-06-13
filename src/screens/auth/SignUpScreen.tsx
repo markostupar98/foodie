@@ -29,7 +29,7 @@ const SignUpScreen: React.FC = () => {
 
     try {
       const response = await axios.post(
-        'http://192.168.1.224:3000/api/auth/signup',
+        'http://10.0.2.2:3000/api/auth/signup',
         {
           email: email,
           password: password,
@@ -43,10 +43,7 @@ const SignUpScreen: React.FC = () => {
       setLoading(false);
 
       if (response.status === 200) {
-        Alert.alert(
-          'Success',
-          'Please check your email for the confirmation link.',
-        );
+        Alert.alert('Success', 'You can log in to your account.');
         navigation.navigate('SignInScreen');
       } else {
         throw new Error(response.data.message || 'Something went wrong');
