@@ -64,13 +64,13 @@ const DishRow = ({item}: DishRowProps) => {
             <TouchableOpacity
               className="p-1 rounded-full bg-emerald-400"
               onPress={() => handleUpdateQuantity(-1)}>
-              <Entypo name="circle-with-minus" size={24} color="black" />
+              <Entypo name="circle-with-minus" size={24} color="white" />
             </TouchableOpacity>
             <Text className="px-3">{cartItem ? cartItem.quantity : 0}</Text>
             <TouchableOpacity
               className="p-1 rounded-full bg-emerald-400"
               onPress={handleAddToCart}>
-              <Entypo name="circle-with-plus" size={24} color="black" />
+              <Entypo name="circle-with-plus" size={24} color="white" />
             </TouchableOpacity>
           </View>
         </View>

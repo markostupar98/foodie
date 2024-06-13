@@ -8,7 +8,7 @@ export const fetchUserProfile = async userId => {
       `http://10.0.2.2:3000/api/users/${userId}/profile`,
     );
     return {profile: response.data, error: null};
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching user profile:', error);
     return {profile: null, error: error.message};
   }
@@ -22,7 +22,7 @@ export const updateUserProfile = async (userId, data) => {
       data,
     );
     return {profile: response.data, error: null};
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating user profile:', error);
     return {profile: null, error: error.message};
   }
