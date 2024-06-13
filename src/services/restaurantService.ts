@@ -22,7 +22,7 @@ export const getRestaurants = async () => {
 export const fetchRestaurantDetailsBasic = async restaurantId => {
   try {
     const response = await axios.get(
-      `http://192.168.1.224:3000/api/restaurants/${restaurantId}`,
+      `http://10.0.2.2:3000/api/restaurants/${restaurantId}`,
     );
     if (!response.data) {
       return {restaurant: null, dishes: [], error: 'Restaurant not found'};
@@ -43,7 +43,7 @@ export const fetchRestaurantDetailsBasic = async restaurantId => {
 export const fetchRestaurantDetailsComplete = async restaurantId => {
   try {
     const response = await axios.get(
-      `http://192.168.1.224:3000/api/restaurants/${restaurantId}/complete`,
+      `http://10.0.2.2:3000/api/restaurants/${restaurantId}/complete`,
     );
     if (!response.data) {
       return {restaurant: null, dishes: [], error: 'Restaurant not found'};

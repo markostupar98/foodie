@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 const HomeHeader = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView className="bg-emerald-300 h-20 flex-row justify-between">
+    <SafeAreaView className="bg-emerald-300 h-[60px] flex-row justify-between">
       <View className="items-center justify-center ml-5">
         <AntDesign name="back" size={24} color="white" />
       </View>
