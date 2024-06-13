@@ -7,6 +7,7 @@ import SignInScreen from '../screens/auth/SignInScreen';
 import SignUpScreen from '../screens/auth/SignUpScreen';
 import RestaurantScreen from '../screens/RestaurantScreen';
 import CartScreen from '../screens/CartScreen';
+import UserProfileScreen from '../screens/UserProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,11 @@ const Navigation = () => {
         <Stack.Screen
           name="SignUpScreen"
           component={SignUpScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="UserProfileScreen"
+          component={UserProfileScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
