@@ -8,6 +8,8 @@ import SignUpScreen from '../screens/auth/SignUpScreen';
 import RestaurantScreen from '../screens/RestaurantScreen';
 import CartScreen from '../screens/CartScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
+import DriverSignInScreen from '../screens/auth/DriverSignInScreen';
+import DriverSignUpScreen from '../screens/auth/DriverSignUpScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +37,7 @@ const Navigation = () => {
           component={RestaurantScreen}
           options={{headerShown: false}}
         />
+        {/* Auth Screens */}
         <Stack.Screen
           name="SignInScreen"
           component={SignInScreen}
@@ -43,6 +46,16 @@ const Navigation = () => {
         <Stack.Screen
           name="SignUpScreen"
           component={SignUpScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DriverSignInScreen"
+          component={DriverSignInScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DriverSignUpScreen"
+          component={DriverSignUpScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen

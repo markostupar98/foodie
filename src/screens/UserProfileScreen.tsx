@@ -1,7 +1,7 @@
 import {View, Text, Image, Alert, ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Button} from '@rneui/themed';
+import Button from '../components/Button';
 import Header from '../components/Header';
 import deliveryGuy from '../../assets/deliveryguy.jpeg';
 // import Header from '../../components/Header';
@@ -95,12 +95,12 @@ const UserProfileScreen = () => {
   return (
     <Background>
       <View className="flex-1">
-        <Header title="Profile" type="back" />
+        <Header title="Profile" />
         <View className="justify-center items-center p-5">
-          <Image
+          {/* <Image
             source={require('../../../assets/deliveryguy.jpeg')}
             className="w-17 h-17 rounded-full"
-          />
+          /> */}
           <Text className="mt-2 text-base">Full Name: {user.fullName}</Text>
           {/* <Text className="mt-2 text-neutral-500">Email: {user.email}</Text> */}
           <View className="w-60 h-60 mt-3 ">
