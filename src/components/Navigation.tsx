@@ -10,6 +10,7 @@ import CartScreen from '../screens/CartScreen';
 import UserProfileScreen from '../screens/UserProfileScreen';
 import DriverSignInScreen from '../screens/auth/DriverSignInScreen';
 import DriverSignUpScreen from '../screens/auth/DriverSignUpScreen';
+import AllRestaurantsScreen from '../screens/AllRestaurantScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,21 +21,6 @@ const Navigation = () => {
         <Stack.Screen
           name="WelcomeScreen"
           component={WelcomeScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="CartScreen"
-          component={CartScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="RestaurantScreen"
-          component={RestaurantScreen}
           options={{headerShown: false}}
         />
         {/* Auth Screens */}
@@ -61,6 +47,26 @@ const Navigation = () => {
         <Stack.Screen
           name="UserProfileScreen"
           component={UserProfileScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CartScreen"
+          component={CartScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="RestaurantScreen"
+          component={RestaurantScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="AllRestaurantsScreen"
+          component={AllRestaurantsScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

@@ -10,8 +10,8 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({title}) => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView className="flex-row bg-emerald-300/70 h-20 items-center">
-      <View className="mt-5 ml-3">
+    <SafeAreaView className="flex-row bg-emerald-300/70 h-[70px] items-center">
+      <View className="mt-2 ml-3">
         <Icon
           onPress={() => {
             navigation.goBack();
@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({title}) => {
           color="black"
         />
       </View>
-      <View className="p-4 mt-5">
+      <View className="p-4 mt-1.5">
         <Text className="text-xl">{title}</Text>
       </View>
     </SafeAreaView>
