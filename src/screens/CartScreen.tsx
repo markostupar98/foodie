@@ -29,9 +29,9 @@ const CartScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState(null);
-  const [restaurant, setRestaurant] = useState(null); // State to store the user profile
+  const [restaurant, setRestaurant] = useState(null);
   const route = useRoute();
-  const userId = useSelector(state => state.user.id); // Accessing user id from Redux store
+  const userId = useSelector(state => state.user.id);
   const {restaurantId} = route.params;
   const cartItems = useSelector(state => state.cart.items);
 

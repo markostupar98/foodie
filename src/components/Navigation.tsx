@@ -11,6 +11,8 @@ import UserProfileScreen from '../screens/UserProfileScreen';
 import DriverSignInScreen from '../screens/auth/DriverSignInScreen';
 import DriverSignUpScreen from '../screens/auth/DriverSignUpScreen';
 import AllRestaurantsScreen from '../screens/AllRestaurantScreen';
+import DeliveryScreen from '../screens/DeliveryScreen';
+import OrderPrepScreen from '../screens/OrderPrepScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +59,16 @@ const Navigation = () => {
         <Stack.Screen
           name="CartScreen"
           component={CartScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DeliveryScreen"
+          component={DeliveryScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="OrderPrepScreen"
+          component={OrderPrepScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
