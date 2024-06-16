@@ -13,74 +13,76 @@ import DriverSignUpScreen from '../screens/auth/DriverSignUpScreen';
 import AllRestaurantsScreen from '../screens/AllRestaurantScreen';
 import DeliveryScreen from '../screens/DeliveryScreen';
 import OrderPrepScreen from '../screens/OrderPrepScreen';
+import DriverHomeScreen from '../screens/DriverHomeScreen';
+import OrderDetailsScreen from '../screens/OrderDetailsScreen';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
+  const isUserLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
+  const isDriverLoggedIn = useSelector((state: any) => state.driver.isLoggedIn);
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="WelcomeScreen"
-          component={WelcomeScreen}
-          options={{headerShown: false}}
-        />
-        {/* Auth Screens */}
-        <Stack.Screen
-          name="SignInScreen"
-          component={SignInScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="SignUpScreen"
-          component={SignUpScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="DriverSignInScreen"
-          component={DriverSignInScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="DriverSignUpScreen"
-          component={DriverSignUpScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="UserProfileScreen"
-          component={UserProfileScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="CartScreen"
-          component={CartScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="DeliveryScreen"
-          component={DeliveryScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="OrderPrepScreen"
-          component={OrderPrepScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="RestaurantScreen"
-          component={RestaurantScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="AllRestaurantsScreen"
-          component={AllRestaurantsScreen}
-          options={{headerShown: false}}
-        />
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        {!isUserLoggedIn && !isDriverLoggedIn ? (
+          <>
+            <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+            <Stack.Screen name="SignInScreen" component={SignInScreen} />
+            <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+            <Stack.Screen
+              name="DriverSignInScreen"
+              component={DriverSignInScreen}
+            />
+            <Stack.Screen
+              name="DriverSignUpScreen"
+              component={DriverSignUpScreen}
+            />
+          </>
+        ) : isUserLoggedIn ? (
+          <>
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen
+              name="RestaurantScreen"
+              component={RestaurantScreen}
+            />
+            <Stack.Screen
+              name="AllRestaurantsScreen"
+              component={AllRestaurantsScreen}
+            />
+            <Stack.Screen
+              name="CartScreen"
+              options={{presentation: 'modal'}}
+              component={CartScreen}
+            />
+            <Stack.Screen
+              name="OrderPrepScreen"
+              options={{presentation: 'fullScreenModal'}}
+              component={OrderPrepScreen}
+            />
+            <Stack.Screen
+              name="DeliveryScreen"
+              options={{presentation: 'fullScreenModal'}}
+              component={DeliveryScreen}
+            />
+            <Stack.Screen
+              name="UserProfileScreen"
+              options={{presentation: 'fullScreenModal'}}
+              component={UserProfileScreen}
+            />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name="DriverHomeScreen"
+              component={DriverHomeScreen}
+            />
+            <Stack.Screen
+              name="OrderDetailsScreen"
+              component={OrderDetailsScreen}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -35,7 +35,7 @@ const DriverSignInScreen = () => {
         throw new Error(error);
       }
       dispatch(setDriver({id: driverId, token}));
-      navigation.navigate('HomeScreen');
+      navigation.navigate('DriverHomeScreen');
     } catch (error) {
       Alert.alert('Error', error.message);
     } finally {
@@ -71,7 +71,7 @@ const DriverSignInScreen = () => {
   return (
     <Background>
       <View className="flex-1">
-        <Header title="Sign In As Driver" type="back" />
+        <Header title="Sign In As Driver" />
         <View className="p-4">
           <Text className="text-xl text-neutral-600">
             Sign In and start driving

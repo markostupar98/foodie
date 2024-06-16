@@ -116,7 +116,7 @@ const SignInScreen: React.FC = () => {
             </Text>
           </Pressable>
         </View>
-        <Pressable
+        {/* <Pressable
           onPress={() => {}}
           className="p-4 border justify-center my-5 flex-row border-neutral-500 mx-5 rounded-full">
           <AntDesign
@@ -132,7 +132,7 @@ const SignInScreen: React.FC = () => {
           className="p-4 border justify-center flex-row border-neutral-500 mx-5 rounded-full">
           <AntDesign name="google" size={24} color="black" className="mr-5" />
           <Text>Sign In with Google</Text>
-        </Pressable>
+        </Pressable> */}
         <View className="mt-5 p-5">
           <Text className="text-neutral-500">New on vugel?</Text>
         </View>
