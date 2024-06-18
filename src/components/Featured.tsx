@@ -20,6 +20,8 @@ const Featured = ({name, featuredRestaurants}: FeaturedProps) => {
     });
   };
 
+  const limitedRestaurants = featuredRestaurants.slice(0, 5);
+
   return (
     <View>
       <View className="flex-row justify-between items-center mt-2 px-4">
@@ -35,7 +37,7 @@ const Featured = ({name, featuredRestaurants}: FeaturedProps) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{paddingHorizontal: 15}}
         className="overflow-visible py-5">
-        {featuredRestaurants.map((restaurant, index) => (
+        {limitedRestaurants.map((restaurant, index) => (
           <RestaurantCard item={restaurant} key={index} />
         ))}
       </ScrollView>

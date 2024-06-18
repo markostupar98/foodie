@@ -1,5 +1,5 @@
 import {View, Text, FlatList, Pressable, Image} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 
 // Defining props
 interface CategoryItem {
@@ -10,9 +10,17 @@ interface CategoryItem {
 
 interface CategoriesProps {
   categories: CategoryItem[];
+  onCategorySelect: (categoryId: number) => void;
 }
 
-const Categories = ({categories}: {categories: CategoriesProps}) => {
+const Categories = ({
+  categories,
+  onCategorySelect,
+}: {
+  categories: CategoriesProps;
+}) => {
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+
   return (
     <View className="mt-5 w-full">
       <Text className="text-xl ml-2 text-neutral-500 font-semibold">
