@@ -21,6 +21,10 @@ const Categories = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
+  const handlePress = (categoryId: number) => {
+    setSelectedCategory(categoryId);
+    onCategorySelect(categoryId);
+  };
   return (
     <View className="mt-5 w-full">
       <Text className="text-xl ml-2 text-neutral-500 font-semibold">
@@ -33,15 +37,23 @@ const Categories = ({
           data={categories}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => (
-            <Pressable>
-              <View className="rounded-full bg-white justify-center items-center p-3 w-15 mt-5 mx-3 h-20">
+            <Pressable onPress={() => handlePress(item.id)}>
+              <View
+                className={`rounded-full justify-center items-center p-3 w-15 mt-5 mx-3 h-20 ${
+                  selectedCategory === item.id ? 'bg-emerald-400' : 'bg-white'
+                }`}>
                 <Image
                   className="h-14 w-14 rounded-3xl"
                   source={{uri: item.image}}
                 />
               </View>
               <View className="items-center my-2">
-                <Text className="text-neutral-500 font-semibold">
+                <Text
+                  className={`font-semibold ${
+                    selectedCategory === item.id
+                      ? 'text-white'
+                      : 'text-neutral-500'
+                  }`}>
                   {item.name}
                 </Text>
               </View>

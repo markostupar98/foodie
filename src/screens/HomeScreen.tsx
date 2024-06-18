@@ -15,6 +15,7 @@ const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [userProfile, setUserProfile] = useState(null);
 
   const userId = useSelector(state => state.user.id);
@@ -55,10 +56,17 @@ const HomeScreen = () => {
   }, [userId]);
 
   // Filtering data
-  const filteredRestaurants = restaurants.filter(restaurant =>
-    restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  // const filteredRestaurants = restaurants.filter(restaurant =>
+  //   restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  // );
 
+  // Filtering by category and search query
+
+  const filteredRestaurants = restaurants.filter(
+    restaurant =>
+      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (selectedCategory === null || restaurant.categoryId === selectedCategory),
+  );
   const sortedRestaurants = userProfile
     ? [...restaurants].sort((a, b) => {
         const distanceA = getDistanceFromLatLonInKm(
@@ -77,6 +85,13 @@ const HomeScreen = () => {
       })
     : [];
 
+  // Filtering distance sorted restaurant by category
+
+  const filteredSortedRestaurants = sortedRestaurants.filter(
+    restaurant =>
+      selectedCategory === null || restaurant.categoryId === selectedCategory,
+  );
+
   return (
     <Background>
       <View className="flex-1">
@@ -85,7 +100,10 @@ const HomeScreen = () => {
           stickyHeaderIndices={[0]}
           showsVerticalScrollIndicator={true}>
           <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
-          <Categories categories={categories} />
+          <Categories
+            categories={categories}
+            onCategorySelect={setSelectedCategory}
+          />
           <Featured
             name="Restaurants you might like"
             featuredRestaurants={filteredRestaurants}
@@ -93,7 +111,7 @@ const HomeScreen = () => {
           {userProfile && (
             <Featured
               name="Closest Restaurants"
-              featuredRestaurants={sortedRestaurants}
+              featuredRestaurants={filteredSortedRestaurants}
             />
           )}
         </ScrollView>
