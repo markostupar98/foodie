@@ -60,10 +60,11 @@
 
 import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../types/RootStockParams';
 import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
 
 type AllRestaurantsScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -74,6 +75,11 @@ const AllRestaurantsScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute<AllRestaurantsScreenRouteProp>();
   const {restaurants} = route.params;
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredRestaurants = restaurants.filter(restaurant =>
+    restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   const renderItem = ({item}: {item: RestaurantItem}) => (
     <TouchableOpacity
@@ -106,8 +112,9 @@ const AllRestaurantsScreen: React.FC = () => {
   return (
     <>
       <Header title="All Restaurants" />
+      <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       <FlatList
-        data={restaurants}
+        data={filteredRestaurants}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={{paddingBottom: 20}}

@@ -55,16 +55,21 @@ const OrderDetailsScreen = () => {
   return (
     <View className="bg-white flex-1">
       <Header title="Order Details" />
-      <View className="relative py-4 my-5 shadow-sm">
+      {/* <View className="relative py-4 my-4 shadow-sm">
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           className="bg-white absolute z-10 rounded-full p-1 shadow top-5 left-2">
-          <Ionicons name="arrow-back-circle" size={40} color="#00d062" />
+          <Ionicons
+            name="arrow-back-circle"
+            className="mt-2"
+            size={40}
+            color="#00d062"
+          />
         </TouchableOpacity>
         <View>
           <Text className="text-center font-bold text-lg">Order Details</Text>
-        </View>
-      </View>
+        </View> */}
+      {/* </View> */}
       <View className="bg-emerald-300/100 opacity-50 flex-row px-4 items-center">
         <Image
           source={require('../../assets/deliveryguy.jpeg')}
@@ -79,7 +84,7 @@ const OrderDetailsScreen = () => {
         contentContainerStyle={{paddingBottom: 50}}
         className="bg-white pt-5">
         <View className="flex-row items-center space-x-3 py-2 px-2 bg-white rounded-3xl mx-2 mb-3 shadow-md">
-          <Text className="font-bold text-emerald-700">Delivery Address:</Text>
+          <Text className="font-bold text-neutral-700">Delivery Address:</Text>
           <Text className="flex-1 font-bold text-gray-600">
             {orderDetails.userAddress}
           </Text>

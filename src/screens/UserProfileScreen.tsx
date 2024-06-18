@@ -349,7 +349,9 @@ const UserProfileScreen: React.FC = () => {
 
           {address && <Text className="text-extrabold">City: {address}</Text>}
 
-          <Button title="Save Location" onPress={saveLocation} />
+          <View className="my-2">
+            <Button title="Save Location" onPress={saveLocation} />
+          </View>
 
           <Button title={'Sign Out'} onPress={signOut} />
         </View>

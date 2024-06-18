@@ -11,6 +11,7 @@ import Background from '../components/Background';
 const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -35,6 +36,11 @@ const HomeScreen = () => {
     fetchRestaurants();
   }, []);
 
+  // Filtering data
+  const filteredRestaurants = restaurants.filter(restaurant =>
+    restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
   return (
     <Background>
       <View className="flex-1">
@@ -42,11 +48,11 @@ const HomeScreen = () => {
         <ScrollView
           stickyHeaderIndices={[0]}
           showsVerticalScrollIndicator={true}>
-          <SearchBar />
+          <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
           <Categories categories={categories} />
           <Featured
             name="Restaurants you might like"
-            featuredRestaurants={restaurants}
+            featuredRestaurants={filteredRestaurants}
           />
         </ScrollView>
       </View>
