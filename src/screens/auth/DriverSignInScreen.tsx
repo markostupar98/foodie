@@ -12,6 +12,7 @@ import {signinDriver} from '../../services/authService';
 import {setDriver} from '../../store/slice/driverSlice';
 import axios from 'axios';
 import {registerForPushNotificationsAsync} from '../../lib/notification';
+import {registerForPushNotifications} from '../../services/notificationService';
 
 const DriverSignInScreen = () => {
   const [email, setEmail] = useState('');
@@ -34,6 +35,8 @@ const DriverSignInScreen = () => {
       if (error) {
         throw new Error(error);
       }
+      await registerForPushNotifications(driverId, 'driver');
+
       dispatch(setDriver({id: driverId, token}));
       navigation.navigate('DriverHomeScreen');
     } catch (error) {

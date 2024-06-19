@@ -10,6 +10,7 @@ import {setUser} from '../../store/slice/userSlice';
 import Background from '../../components/Background';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../types/RootStockParams';
+import {registerForPushNotifications} from '../../services/notificationService';
 
 const SignInScreen: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -36,6 +37,7 @@ const SignInScreen: React.FC = () => {
         },
       );
       const {token, userId} = response.data; // Pretpostavimo da backend šalje ovo
+      await registerForPushNotifications(userId, 'user');
 
       setLoading(false);
 
