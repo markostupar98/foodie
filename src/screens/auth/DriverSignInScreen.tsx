@@ -96,6 +96,7 @@ const DriverSignInScreen = () => {
               <AntDesign name="lock1" size={24} color="black" />
             </View>
             <TextInput
+              secureTextEntry={!showPassword}
               value={password}
               onChangeText={setPassword}
               placeholder="Password"
