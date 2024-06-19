@@ -81,7 +81,7 @@ const RestaurantCard = ({item, userLocation}: RestaurantCardProps) => {
   const isValidCoordinate = (coordinate: number | undefined) =>
     typeof coordinate === 'number' && !isNaN(coordinate);
 
-  let distance = NaN;
+  let distance = 'Invalid distance';
 
   if (
     isValidCoordinate(userLocation.latitude) &&
@@ -117,7 +117,7 @@ const RestaurantCard = ({item, userLocation}: RestaurantCardProps) => {
           <Text className="font-semibold">{item.name}</Text>
           <Text className="mb-2">Category: {item.categoryName}</Text>
           {isNaN(distance) ? (
-            <Text className="mb-2 text-red-500">Distance: N/A</Text>
+            <Text className="mb-2 text-red-500">Distance: Invalid </Text>
           ) : (
             <Text className="mb-2">Distance: {distance.toFixed(2)} km</Text>
           )}

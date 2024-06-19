@@ -166,7 +166,18 @@ const HomeScreen = () => {
     const fetchUserProfileData = async () => {
       try {
         const userProfileData = await fetchUserProfile(userId);
-        setUserProfile(userProfileData.profile);
+        if (userProfileData.error) {
+          throw new Error(userProfileData.error);
+        }
+        if (
+          userProfileData.profile &&
+          userProfileData.profile.latitude &&
+          userProfileData.profile.longitude
+        ) {
+          setUserProfile(userProfileData.profile);
+        } else {
+          console.error('User profile data is incomplete.');
+        }
       } catch (error) {
         console.error('Error fetching user profile:', error);
       }
