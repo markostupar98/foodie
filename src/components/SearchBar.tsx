@@ -1,8 +1,7 @@
 // SearchBar.tsx
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, TextInput} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 interface SearchBarProps {
   value: string;
@@ -20,10 +19,6 @@ const SearchBar: React.FC<SearchBarProps> = ({value, onChangeText}) => {
           value={value}
           onChangeText={onChangeText}
         />
-        {/* <View className="flex-row items-center space-x-1 border-0 border-l-2 pl-2 border-l-gray-300">
-          <FontAwesome name="map-marker" size={24} color="black" />
-          <Text className="text-gray-600">Banja Luka,RS</Text>
-        </View> */}
       </View>
     </View>
   );

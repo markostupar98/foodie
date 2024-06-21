@@ -1,11 +1,13 @@
-import {View, Text} from 'react-native';
 import React from 'react';
+import {View, Text} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
+import {RootStackParamList} from '../types/RootStockParams';
 
-const HomeHeader = () => {
-  const navigation = useNavigation();
+const HomeHeader: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
     <SafeAreaView className="bg-emerald-300 h-[60px] flex-row justify-between">
       <View className="items-center justify-center ml-5">
