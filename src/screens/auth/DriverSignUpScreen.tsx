@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -6,33 +7,32 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
-import Header from '../../components/Header';
-// import * as Animatable from 'react-native-animatable';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Picker} from '@react-native-picker/picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import {Button} from '@rneui/themed';
+import Header from '../../components/Header';
 import Button from '../../components/Button';
-import {useNavigation} from '@react-navigation/native';
 import Background from '../../components/Background';
 import {signupDriver} from '../../services/authService';
+import {RootStackParamList} from '../../types/RootStockParams';
 
-const DriverSignUpScreen = () => {
-  const navigation = useNavigation();
+const DriverSignUpScreen: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [vehicleType, setVehicleType] = useState('Motorcycle');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhone] = useState('');
-
   const [loading, setLoading] = useState(false);
 
+  // Toggle password visibility
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  // Handle sign up with email and password
   const signUpWithEmail = async () => {
     setLoading(true);
     try {
@@ -46,9 +46,9 @@ const DriverSignUpScreen = () => {
 
       if (error) throw new Error(error);
 
-      Alert.alert('Success', 'Check your email for verification!');
+      Alert.alert('Success', 'You successfully signed up!');
       navigation.navigate('DriverSignInScreen');
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert('Error', error.message);
     } finally {
       setLoading(false);
@@ -58,7 +58,7 @@ const DriverSignUpScreen = () => {
   return (
     <Background>
       <View className="flex-1">
-        <Header title="Want to drive for us?" type="back" />
+        <Header title="Want to drive for us?" />
         <View className="p-8 mt-3 items-center">
           <Text className="text-2xl justify-center items-center text-neutral-500">
             Register as a driver and start earning
@@ -86,16 +86,14 @@ const DriverSignUpScreen = () => {
           />
           <Picker
             selectedValue={vehicleType}
-            onValueChange={(itemValue, itemIndex) => setVehicleType(itemValue)}
+            onValueChange={itemValue => setVehicleType(itemValue)}
             style={{width: '100%', height: 50}}>
             <Picker.Item label="Motorcycle" value="Motorcycle" />
             <Picker.Item label="Bike" value="Bike" />
             <Picker.Item label="Car" value="Car" />
           </Picker>
           <View className="border mx-5 border-neutral-300 flex-row justify-between items-center mb-5 rounded-lg">
-            <View>
-              <AntDesign name="lock1" size={24} color="black" />
-            </View>
+            <AntDesign name="lock1" size={24} color="black" />
             <TextInput
               secureTextEntry={!showPassword}
               value={password}
@@ -113,7 +111,7 @@ const DriverSignUpScreen = () => {
           </View>
           <Button
             disabled={loading}
-            title={'Register'}
+            title="Register"
             onPress={signUpWithEmail}
           />
         </View>

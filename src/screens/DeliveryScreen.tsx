@@ -5,12 +5,12 @@
 //   TouchableOpacity,
 //   Alert,
 //   ActivityIndicator,
+//   StyleSheet,
 // } from 'react-native';
 // import React, {useEffect, useState} from 'react';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
-// import AntDesign from 'react-native-vector-icons/AntDesign';
 // import {useNavigation, useRoute} from '@react-navigation/native';
-// import MapView, {Marker} from 'react-native-maps';
+// import {WebView} from 'react-native-webview';
 // import {useSelector} from 'react-redux';
 // import {fetchRestaurantDetailsComplete} from '../services/restaurantService';
 // import {fetchUserProfile} from '../services/userService';
@@ -18,7 +18,6 @@
 //   calculateDelivery,
 //   getDistanceFromLatLonInKm,
 // } from '../lib/deliveryFeeandTimeCalc';
-// import {fetchOrderDetails} from '../services/orderService';
 
 // interface RouteParams {
 //   restaurantId: string;
@@ -42,32 +41,11 @@
 //   const {restaurantId} = route.params as RouteParams;
 //   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 //   const [orderDetails, setOrderDetails] = useState(null);
-//   const [restaurant, setRestaurant] = useState(null);
+//   const [restaurant, setRestaurant] = useState<any>(null);
 
 //   const [deliveryInfo, setDeliveryInfo] = useState({fee: 0, time: 0});
 //   const [loading, setLoading] = useState(true);
-//   const [profile, setProfile] = useState(null); // State to store user profile
 
-//   // Fetching order data
-//   // useEffect(() => {
-//   //   const loadOrderDetails = async () => {
-//   //     setLoading(true);
-//   //     try {
-//   //       const details = await fetchOrderDetails(orderId);
-//   //       if (details.error) {
-//   //         throw new Error(details.error);
-//   //       }
-//   //       setOrderDetails(details);
-//   //     } catch (error) {
-//   //       console.error("Error loading details:", error);
-//   //       Alert.alert("Error", error.message);
-//   //     } finally {
-//   //       setLoading(false);
-//   //     }
-//   //   };
-
-//   //   loadOrderDetails();
-//   // }, [orderId]);
 //   // Fetching restaurant and user data
 //   useEffect(() => {
 //     const loadDetails = async () => {
@@ -122,27 +100,18 @@
 //   if (!userProfile) {
 //     return <Text>No profile data available.</Text>;
 //   }
+
+//   const mapUri = `https://www.openstreetmap.org/export/embed.html?bbox=${
+//     userProfile.longitude - 0.01
+//   },${userProfile.latitude - 0.01},${userProfile.longitude + 0.01},${
+//     userProfile.latitude + 0.01
+//   }&layer=mapnik&marker=${userProfile.latitude},${userProfile.longitude}`;
+
 //   return (
 //     <View className="flex-1">
-//       <MapView
-//         initialRegion={{
-//           latitude: userProfile.latitude,
-//           longitude: userProfile.longitude,
-//           latitudeDelta: 0.01,
-//           longitudeDelta: 0.01,
-//         }}
-//         className="flex-1"
-//         mapType="standard">
-//         <Marker
-//           coordinate={{
-//             latitude: userProfile.latitude,
-//             longitude: userProfile.longitude,
-//           }}
-//           title={userProfile.name}
-//           description={userProfile.description}
-//           pinColor="#6B7280"
-//         />
-//       </MapView>
+//       <View style={styles.mapContainer}>
+//         <WebView source={{uri: mapUri}} style={styles.webView} />
+//       </View>
 //       <View className="rounded-t-3xl -mt-12 bg-white relative">
 //         <View className="flex-row justify-between px-2 pt-5">
 //           <View>
@@ -162,19 +131,11 @@
 //           />
 //         </View>
 //         <View className="bg-emerald-400/100 p-2 flex-row justify-between items-center rounded-full my-5 mx-2">
-//           <View className="p-1 rounded-full bg-emerald-400/100">
-//             {/* <Image
-//                 className="h-16 w-16 rounded-full"
-//                 source={require("../../assets/driver.jpeg")}
-//               /> */}
-//           </View>
+//           <View className="p-1 rounded-full bg-emerald-400/100"></View>
 //           <View className="flex-1 ml-3">
 //             <Text className="text-lg font-bold text-white">
 //               You will get notified when driver picks up your order
 //             </Text>
-//             {/* <Text className="text-lg font-bold text-white">
-//                 Your delivery driver -
-//               </Text> */}
 //           </View>
 //           <View className="flex-row items-center space-x-3 mr-3">
 //             <TouchableOpacity
@@ -189,6 +150,17 @@
 //   );
 // };
 
+// const styles = StyleSheet.create({
+//   mapContainer: {
+//     width: '100%',
+//     height: 580,
+//     marginTop: 10,
+//   },
+//   webView: {
+//     flex: 1,
+//   },
+// });
+
 // export default DeliveryScreen;
 
 import {
@@ -202,8 +174,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {WebView} from 'react-native-webview';
 import {useSelector} from 'react-redux';
 import {fetchRestaurantDetailsComplete} from '../services/restaurantService';
@@ -212,35 +183,30 @@ import {
   calculateDelivery,
   getDistanceFromLatLonInKm,
 } from '../lib/deliveryFeeandTimeCalc';
+import {RootState} from '../store';
+import {RootStackParamList} from '../types/RootStockParams';
+import {Restaurants, User} from '../types/types';
 
-interface RouteParams {
-  restaurantId: string;
-}
-interface UserProfile {
-  latitude: number;
-  longitude: number;
-  name: string;
-  description: string;
+interface DeliveryInfo {
+  fee: number;
+  time: number;
 }
 
-interface RootState {
-  user: {
-    id: number;
-  };
-}
+type DeliveryScreenRouteProp = RouteProp<RootStackParamList, 'DeliveryScreen'>;
 
-const DeliveryScreen = () => {
-  const route = useRoute();
-  const userId = useSelector((state: RootState) => state.user.id); // Accessing user id from Redux store
-  const {restaurantId} = route.params as RouteParams;
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [orderDetails, setOrderDetails] = useState(null);
-  const [restaurant, setRestaurant] = useState<any>(null);
-
-  const [deliveryInfo, setDeliveryInfo] = useState({fee: 0, time: 0});
+const DeliveryScreen: React.FC = () => {
+  const route = useRoute<DeliveryScreenRouteProp>();
+  const navigation = useNavigation();
+  const userId = useSelector((state: RootState) => state.user.id);
+  const {restaurantId} = route.params;
+  const [userProfile, setUserProfile] = useState<User | null>(null);
+  const [restaurant, setRestaurant] = useState<Restaurants | null>(null);
+  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfo>({
+    fee: 0,
+    time: 0,
+  });
   const [loading, setLoading] = useState(true);
 
-  // Fetching restaurant and user data
   useEffect(() => {
     const loadDetails = async () => {
       setLoading(true);
@@ -261,10 +227,10 @@ const DeliveryScreen = () => {
         const profile = userProfileResult.profile;
         if (restaurant && profile) {
           const distance = getDistanceFromLatLonInKm(
-            profile.latitude,
-            profile.longitude,
-            restaurant.latitude,
-            restaurant.longitude,
+            profile.latitude!,
+            profile.longitude!,
+            restaurant.latitude!,
+            restaurant.longitude!,
           );
 
           const {deliveryFee, deliveryTime} = calculateDelivery(distance);
@@ -285,8 +251,6 @@ const DeliveryScreen = () => {
     loadDetails();
   }, [restaurantId, userId]);
 
-  const navigation = useNavigation();
-
   if (loading) {
     return <ActivityIndicator size="large" />;
   }
@@ -296,9 +260,9 @@ const DeliveryScreen = () => {
   }
 
   const mapUri = `https://www.openstreetmap.org/export/embed.html?bbox=${
-    userProfile.longitude - 0.01
-  },${userProfile.latitude - 0.01},${userProfile.longitude + 0.01},${
-    userProfile.latitude + 0.01
+    userProfile.longitude! - 0.01
+  },${userProfile.latitude! - 0.01},${userProfile.longitude! + 0.01},${
+    userProfile.latitude! + 0.01
   }&layer=mapnik&marker=${userProfile.latitude},${userProfile.longitude}`;
 
   return (

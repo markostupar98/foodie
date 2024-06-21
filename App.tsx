@@ -26,6 +26,8 @@ import React, {useEffect} from 'react';
 import {Provider} from 'react-redux';
 import {store} from './src/store';
 import messaging from '@react-native-firebase/messaging';
+import notifee, {AndroidImportance} from '@notifee/react-native';
+
 import {Alert} from 'react-native';
 import {PermissionsAndroid} from 'react-native';
 
@@ -72,6 +74,27 @@ const App = () => {
 
     return unsubscribe;
   }, []);
+
+  const displayNotification = async remoteMessage => {
+    // Create a channel (required for Android)
+    await notifee.createChannel({
+      id: 'default',
+      name: 'Default Channel',
+      importance: AndroidImportance.HIGH,
+    });
+
+    // Display a notification
+    await notifee.displayNotification({
+      title: remoteMessage.notification.title,
+      body: remoteMessage.notification.body,
+      android: {
+        channelId: 'default',
+        pressAction: {
+          id: 'default',
+        },
+      },
+    });
+  };
 
   return (
     <Provider store={store}>

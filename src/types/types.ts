@@ -58,7 +58,7 @@ export interface Restaurants {
   dishes: Dish[];
   orders: Order[];
   categoryId: number;
-  category: Category;
+  categoryName: Category;
   latitude?: number;
   longitude?: number;
 }

@@ -1,15 +1,16 @@
-import {View, Text, TextInput, Pressable, Alert} from 'react-native';
 import React, {useState} from 'react';
-import Header from '../../components/Header';
-import axios from 'axios';
+import {View, Text, TextInput, Pressable, Alert} from 'react-native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Header from '../../components/Header';
 import Button from '../../components/Button';
-import {useNavigation, NavigationProp} from '@react-navigation/native';
 import Background from '../../components/Background';
+import {signUpUser} from '../../services/authService';
+import {RootStackParamList} from '../../types/RootStockParams';
 
 const SignUpScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const [username, setUsername] = useState<string>('');
   const [fullName, setFullName] = useState<string>('');
@@ -19,44 +20,35 @@ const SignUpScreen: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Toggle password visibility
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   // Sign up function
-  async function signUpWithEmail() {
+  const signUpWithEmail = async () => {
     setLoading(true);
-
     try {
-      const response = await axios.post(
-        'http://10.0.2.2:3000/api/auth/signup',
-        {
-          email: email,
-          password: password,
-          fullName: fullName,
-          username: username,
-          address: address,
-          role: 'user',
-        },
+      const {success, message} = await signUpUser(
+        email,
+        password,
+        fullName,
+        username,
+        address,
       );
-
       setLoading(false);
-
-      if (response.status === 200) {
-        Alert.alert('Success', 'You can log in to your account.');
+      if (success) {
+        Alert.alert('Success', message);
         navigation.navigate('SignInScreen');
       } else {
-        throw new Error(response.data.message || 'Something went wrong');
+        throw new Error(message);
       }
     } catch (error: any) {
       setLoading(false);
-      Alert.alert(
-        'Error',
-        error.response ? error.response.data.message : error.message,
-      );
+      Alert.alert('Error', error.message);
       console.log(error.message, error.response);
     }
-  }
+  };
 
   return (
     <Background>
@@ -65,7 +57,6 @@ const SignUpScreen: React.FC = () => {
         <View className="p-8 mt-3 items-center">
           <Text className="text-xl text-neutral-600">Create your account</Text>
         </View>
-        <View className="items-center justify-center mt-2"></View>
         <View className="mt-8">
           <View>
             <TextInput
@@ -108,24 +99,21 @@ const SignUpScreen: React.FC = () => {
               value={password}
               onChangeText={setPassword}
               placeholder="Password"
-              className="h-10"
+              className="h-10 flex-1 ml-2"
             />
-            <View>
-              <MaterialIcons
-                name={`${showPassword ? 'visibility' : 'visibility-off'}`}
-                size={24}
-                color="black"
-                className="mr-5"
-                onPress={toggleShowPassword}
-              />
-            </View>
+            <MaterialIcons
+              name={showPassword ? 'visibility' : 'visibility-off'}
+              size={24}
+              color="black"
+              className="mr-5"
+              onPress={toggleShowPassword}
+            />
           </View>
         </View>
         <View className="w-90 mx-7 my-2">
           <Button
             disabled={loading}
-            className="mr-5"
-            title={'Register'}
+            title="Register"
             onPress={signUpWithEmail}
           />
         </View>

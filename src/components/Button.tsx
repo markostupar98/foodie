@@ -1,19 +1,28 @@
 import React from 'react';
-import {Text, TouchableOpacity, GestureResponderEvent} from 'react-native';
+import {TouchableOpacity, Text, ActivityIndicator} from 'react-native';
 
 interface ButtonProps {
-  onPress?: (event: GestureResponderEvent) => void;
   title: string;
+  onPress: () => void;
+  disabled?: boolean;
   loading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({onPress, title, loading}) => (
-  <TouchableOpacity
-    disabled={loading}
-    className="rounded-full p-2.5 overflow-hidden bg-emerald-400"
-    onPress={onPress}>
-    <Text className="text-lg text-white font-semibold"> {title}</Text>
-  </TouchableOpacity>
-);
+const Button: React.FC<ButtonProps> = ({title, onPress, disabled, loading}) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled}
+      className={`p-4 bg-emerald-400 rounded-full justify-center items-center ${
+        disabled ? 'bg-emerald-300' : 'bg-emerald-400'
+      }`}>
+      {loading ? (
+        <ActivityIndicator color="white" />
+      ) : (
+        <Text className="text-white font-bold">{title}</Text>
+      )}
+    </TouchableOpacity>
+  );
+};
 
 export default Button;
