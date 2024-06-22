@@ -262,7 +262,7 @@ import {
   calculateDelivery,
   getDistanceFromLatLonInKm,
 } from '../lib/deliveryFeeandTimeCalc';
-import {fetchRestaurantDetailsComplete} from '../services/restaurantService';
+import {fetchRestaurantDetails} from '../services/restaurantService';
 import {fetchUserProfile} from '../services/userService';
 import {Restaurants} from '../types/types';
 import {User} from '../types/types';
@@ -297,8 +297,9 @@ const CartScreen: React.FC = () => {
     const loadDetails = async () => {
       setLoading(true);
       try {
-        const restaurantResult = await fetchRestaurantDetailsComplete(
+        const restaurantResult = await fetchRestaurantDetails(
           restaurantId,
+          true,
         );
         if (restaurantResult.error) {
           throw new Error(restaurantResult.error);

@@ -69,7 +69,12 @@ const App = () => {
 
     // Listen for messages
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      displayNotification(remoteMessage);
+    });
+
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in the background!', remoteMessage);
+      displayNotification(remoteMessage);
     });
 
     return unsubscribe;

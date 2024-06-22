@@ -1,9 +1,10 @@
 // services/restaurantService.js
 import axios from 'axios';
+import {BASE_URL} from '../lib/api';
 
 export const getRestaurants = async () => {
   try {
-    const response = await axios.get('http://10.0.2.2:3000/api/restaurants');
+    const response = await axios.get(`http://${BASE_URL}/api/restaurants`);
     const data = response.data;
 
     // Map the data if needed or use it directly
@@ -19,11 +20,16 @@ export const getRestaurants = async () => {
 
 // services/restaurantService.js
 // Fetch basic details of a restaurant by ID
-export const fetchRestaurantDetailsBasic = async restaurantId => {
+export const fetchRestaurantDetails = async (
+  restaurantId,
+  includeCompleteDetails = false,
+) => {
   try {
-    const response = await axios.get(
-      `http://10.0.2.2:3000/api/restaurants/${restaurantId}`,
-    );
+    const endpoint = includeCompleteDetails
+      ? `${BASE_URL}/api/restaurants/${restaurantId}/complete`
+      : `${BASE_URL}/api/restaurants/${restaurantId}`;
+
+    const response = await axios.get(endpoint);
     if (!response.data) {
       return {restaurant: null, dishes: [], error: 'Restaurant not found'};
     }
@@ -33,28 +39,7 @@ export const fetchRestaurantDetailsBasic = async restaurantId => {
       error: null,
     };
   } catch (error) {
-    console.error('Error fetching basic restaurant details:', error);
-    return {restaurant: null, dishes: [], error: error.message};
-  }
-};
-
-// Fetch complete details of a restaurant by ID including coordinates and address
-
-export const fetchRestaurantDetailsComplete = async restaurantId => {
-  try {
-    const response = await axios.get(
-      `http://10.0.2.2:3000/api/restaurants/${restaurantId}/complete`,
-    );
-    if (!response.data) {
-      return {restaurant: null, dishes: [], error: 'Restaurant not found'};
-    }
-    return {
-      restaurant: response.data,
-      dishes: response.data.dishes || [],
-      error: null,
-    };
-  } catch (error) {
-    console.error('Error fetching complete restaurant details:', error.message);
+    console.error('Error fetching restaurant details:', error.message);
     return {restaurant: null, dishes: [], error: error.message};
   }
 };

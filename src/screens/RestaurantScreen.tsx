@@ -111,7 +111,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import DishRow from '../components/DishRow';
 import CartIcon from '../components/CartIcon';
 import {useSelector} from 'react-redux';
-import {fetchRestaurantDetailsComplete} from '../services/restaurantService';
+import {fetchRestaurantDetails} from '../services/restaurantService';
 import {fetchUserProfile} from '../services/userService';
 import {getDistanceFromLatLonInKm} from '../lib/deliveryFeeandTimeCalc';
 
@@ -130,8 +130,9 @@ const RestaurantScreen = () => {
     const loadDetails = async () => {
       setLoading(true);
       try {
-        const restaurantResponse = await fetchRestaurantDetailsComplete(
+        const restaurantResponse = await fetchRestaurantDetails(
           restaurantId,
+          true,
         );
         if (restaurantResponse.error) {
           throw new Error(restaurantResponse.error);

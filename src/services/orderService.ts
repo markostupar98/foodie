@@ -1,7 +1,6 @@
 import axios from 'axios';
-
-// Create order function
 import {Order, OrderItem} from '../types/types';
+import {BASE_URL} from '../lib/api';
 
 // Create order function
 export const createOrder = async (
@@ -12,7 +11,7 @@ export const createOrder = async (
   total: number,
 ): Promise<Order> => {
   try {
-    const response = await axios.post('http://10.0.2.2:3000/api/orders', {
+    const response = await axios.post(`${BASE_URL}/api/orders`, {
       userId,
       restaurantId,
       deliveryAddress,
@@ -31,9 +30,7 @@ export const fetchOrderDetails = async (
   orderId: number,
 ): Promise<(Order & {error: null}) | {error: string}> => {
   try {
-    const response = await axios.get(
-      `http://10.0.2.2:3000/api/orders/${orderId}`,
-    );
+    const response = await axios.get(`${BASE_URL}/api/orders/${orderId}`);
     return {...response.data, error: null};
   } catch (error: any) {
     console.error('Error fetching order details:', error);
@@ -44,7 +41,7 @@ export const fetchOrderDetails = async (
 // Fetch orders
 export const fetchOrders = async (): Promise<Order[]> => {
   try {
-    const response = await axios.get(`http://10.0.2.2:3000/api/orders`);
+    const response = await axios.get(`${BASE_URL}/api/orders`);
     return response.data;
   } catch (error) {
     console.error('Error fetching orders:', error);
@@ -58,13 +55,10 @@ export const assignDriverToOrder = async (
   driverId: number,
 ): Promise<Order> => {
   try {
-    const response = await axios.post(
-      `http://10.0.2.2:3000/api/orders/assign-driver`,
-      {
-        orderId,
-        driverId,
-      },
-    );
+    const response = await axios.post(`${BASE_URL}/api/orders/assign-driver`, {
+      orderId,
+      driverId,
+    });
     return response.data;
   } catch (error) {
     console.error('Error assigning driver to order:', error);

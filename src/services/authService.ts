@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {Driver} from '../types/types';
+import {BASE_URL} from '../lib/api';
 
 interface SignUpDriverResponse {
   driverId: number | null;
@@ -28,7 +29,7 @@ export const signupDriver = async (
 ): Promise<SignUpDriverResponse> => {
   try {
     const response = await axios.post(
-      'http://10.0.2.2:3000/api/auth/signup/driver',
+      `${BASE_URL}/api/auth/signup/driver`,
       driverData,
     );
     return {driverId: response.data.driverId, error: null};
@@ -43,10 +44,10 @@ export const signinDriver = async (
   password: string,
 ): Promise<SignInDriverResponse> => {
   try {
-    const response = await axios.post(
-      'http://10.0.2.2:3000/api/auth/signin/driver',
-      {email, password},
-    );
+    const response = await axios.post(`${BASE_URL}/api/auth/signin/driver`, {
+      email,
+      password,
+    });
     return {
       token: response.data.token,
       driverId: response.data.driverId,
@@ -63,7 +64,7 @@ export const signInUser = async (
   password: string,
 ): Promise<SignInUserResponse> => {
   try {
-    const response = await axios.post('http://10.0.2.2:3000/api/auth/signin', {
+    const response = await axios.post(`${BASE_URL}/api/auth/signin`, {
       email,
       password,
     });
@@ -90,7 +91,7 @@ export const signUpUser = async (
   address: string,
 ): Promise<SignUpUserResponse> => {
   try {
-    const response = await axios.post('http://10.0.2.2:3000/api/auth/signup', {
+    const response = await axios.post(`${BASE_URL}/api/auth/signup`, {
       email,
       password,
       fullName,

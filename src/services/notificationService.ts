@@ -1,11 +1,12 @@
 import axios from 'axios';
 import messaging from '@react-native-firebase/messaging';
+import {BASE_URL} from '../lib/api';
 
 // Register FCM token function
 export const registerForPushNotifications = async (userId: number) => {
   try {
     const token = await messaging().getToken();
-    await axios.post('http://10.0.2.2:3000/api/users/register-token', {
+    await axios.post(`${BASE_URL}/api/users/register-token`, {
       userId,
       token,
     });
