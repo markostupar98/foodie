@@ -56,6 +56,7 @@ import {fetchOrders} from '../services/orderService';
 import OrderList from '../components/OrderList';
 import Background from '../components/Background';
 import {Order} from '../types/types';
+import HomeHeader from '../components/HomeHeader';
 
 const DriverHomeScreen: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -84,18 +85,25 @@ const DriverHomeScreen: React.FC = () => {
   return (
     <Background>
       <View className="flex-1">
-        <Text className="mt-10 font-extrabold text-lg mx-auto">
+        {/* <Text className="mt-10 font-extrabold text-2xl mx-auto">
           Available Orders
-        </Text>
+        </Text> */}
+        <HomeHeader />
         <ScrollView>
-          {orders.map(order => (
-            <OrderList
-              key={order.id}
-              orderId={order.id}
-              restaurant={order.restaurant}
-              user={order.user}
-            />
-          ))}
+          {orders.length > 0 ? (
+            orders.map(order => (
+              <OrderList
+                key={order.id}
+                orderId={order.id}
+                restaurant={order.restaurant}
+                user={order.user}
+              />
+            ))
+          ) : (
+            <Text className="mt-10 text-center text-2xl">
+              No orders available at time!
+            </Text>
+          )}
         </ScrollView>
       </View>
     </Background>

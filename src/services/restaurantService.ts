@@ -4,7 +4,7 @@ import {BASE_URL} from '../lib/api';
 
 export const getRestaurants = async () => {
   try {
-    const response = await axios.get(`http://${BASE_URL}/api/restaurants`);
+    const response = await axios.get(`${BASE_URL}/api/restaurants`);
     const data = response.data;
 
     // Map the data if needed or use it directly
@@ -13,11 +13,14 @@ export const getRestaurants = async () => {
       categoryName: restaurant.category.name, // Adjust based on actual data structure
     }));
   } catch (error) {
-    console.error('Failed to fetch restaurants:', error);
+    console.error('Failed to fetch restaurants:', error.message);
+    console.error(
+      'Error details:',
+      error.response ? error.response.data : 'No response data',
+    );
     return [];
   }
 };
-
 // services/restaurantService.js
 // Fetch basic details of a restaurant by ID
 export const fetchRestaurantDetails = async (
