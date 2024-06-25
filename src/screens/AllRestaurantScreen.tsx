@@ -4,23 +4,17 @@
 // import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 // import {useSelector} from 'react-redux';
 // import {RootState} from '../store';
-// import {RootStackParamLists} from '../types/RootStockParams';
+// import {RootStackParamList} from '../types/RootStockParams';
 // import Header from '../components/Header';
 // import SearchBar from '../components/SearchBar';
 // import {fetchUserProfile} from '../services/userService';
 // import {getDistanceFromLatLonInKm} from '../lib/deliveryFeeandTimeCalc';
+// import {Restaurants, Category} from '../types/types';
 
-// type AllRestaurantsScreenRouteProp = RouteProp<'AllRestaurantsScreen'>;
-
-// interface RestaurantItem {
-//   id: number;
-//   name: string;
-//   image: string;
-//   categoryName: string;
-//   latitude: number;
-//   longitude: number;
-//   address: string;
-// }
+// type AllRestaurantsScreenRouteProp = RouteProp<
+//   RootStackParamList,
+//   'AllRestaurantsScreen'
+// >;
 
 // const PAGE_SIZE = 5;
 
@@ -57,7 +51,7 @@
 //     fetchUserProfileData();
 //   }, [userId]);
 
-//   const filteredRestaurants = restaurants.filter((restaurant: RestaurantItem) =>
+//   const filteredRestaurants = restaurants.filter((restaurant: Restaurants) =>
 //     restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()),
 //   );
 
@@ -66,13 +60,13 @@
 //     page * PAGE_SIZE,
 //   );
 
-//   const renderItem = ({item}: {item: RestaurantItem}) => {
+//   const renderItem = ({item}: {item: Restaurants}) => {
 //     const distance = userProfile
 //       ? getDistanceFromLatLonInKm(
-//           userProfile.latitude,
-//           userProfile.longitude,
-//           item.latitude,
-//           item.longitude,
+//           userProfile.latitude ?? 0, // Osiguraj da je vrijednost broj
+//           userProfile.longitude ?? 0, // Osiguraj da je vrijednost broj
+//           item.latitude ?? 0, // Osiguraj da je vrijednost broj
+//           item.longitude ?? 0, // Osiguraj da je vrijednost broj
 //         ).toFixed(2)
 //       : 'N/A';
 
@@ -94,7 +88,10 @@
 //           )}
 //           <View className="px-3 mt-2 space-y-2">
 //             <Text className="font-semibold">{item.name}</Text>
-//             <Text className="mb-2">Category: {item.categoryName}</Text>
+//             <Text className="mb-2">
+//               Category: {item.categoryName.name}{' '}
+//               {/* Prikazivanje imena kategorije */}
+//             </Text>
 //             <Text className="mb-2">Distance: {distance} km</Text>
 //           </View>
 //           <View className="flex-row items-center space-x-1">
@@ -116,7 +113,7 @@
 //         keyExtractor={item => item.id.toString()}
 //         contentContainerStyle={{paddingBottom: 20}}
 //         ListFooterComponent={
-//           filteredRestaurants.length > PAGE_SIZE && (
+//           filteredRestaurants.length > PAGE_SIZE ? (
 //             <View className="flex-row justify-between px-4 ">
 //               <TouchableOpacity
 //                 disabled={page === 1}
@@ -140,7 +137,7 @@
 //                 </Text>
 //               </TouchableOpacity>
 //             </View>
-//           )
+//           ) : null
 //         }
 //       />
 //     </View>
@@ -150,7 +147,14 @@
 // export default AllRestaurantsScreen;
 
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  useColorScheme,
+} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
@@ -177,6 +181,7 @@ const AllRestaurantsScreen: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
   const [userProfile, setUserProfile] = useState<any>(null);
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     const fetchUserProfileData = async () => {
@@ -226,28 +231,51 @@ const AllRestaurantsScreen: React.FC = () => {
         onPress={() =>
           navigation.navigate('RestaurantScreen', {restaurantId: item.id})
         }>
-        <View className="m-2 p-5 w-full bg-white rounded-3xl shadow-lg">
+        <View
+          className={`m-2 p-5 w-full ${
+            colorScheme === 'dark' ? 'bg-gray-800' : 'bg-white'
+          } rounded-3xl shadow-lg`}>
           {item.image ? (
             <Image
               className="h-40 w-full rounded-t-3xl"
               source={{uri: item.image}}
             />
           ) : (
-            <View className="h-40 w-80 rounded-t-3xl bg-gray-200 flex items-center justify-center">
+            <View
+              className={`h-40 w-80 rounded-t-3xl ${
+                colorScheme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'
+              } flex items-center justify-center`}>
               <Text className="text-gray-500">Image not available</Text>
             </View>
           )}
           <View className="px-3 mt-2 space-y-2">
-            <Text className="font-semibold">{item.name}</Text>
-            <Text className="mb-2">
-              Category: {item.categoryName.name}{' '}
-              {/* Prikazivanje imena kategorije */}
+            <Text
+              className={`font-semibold ${
+                colorScheme === 'dark' ? 'text-white' : 'text-black'
+              }`}>
+              {item.name}
             </Text>
-            <Text className="mb-2">Distance: {distance} km</Text>
+            <Text
+              className={`mb-2 ${
+                colorScheme === 'dark' ? 'text-gray-400' : 'text-black'
+              }`}>
+              Category: {item.categoryName.name}
+            </Text>
+            <Text
+              className={`mb-2 ${
+                colorScheme === 'dark' ? 'text-gray-400' : 'text-black'
+              }`}>
+              Distance: {distance} km
+            </Text>
           </View>
           <View className="flex-row items-center space-x-1">
             <FontAwesome name="map-marker" size={24} color="gray" />
-            <Text className="text-xs">Nearby - {item.address}</Text>
+            <Text
+              className={`text-xs ${
+                colorScheme === 'dark' ? 'text-gray-400' : 'text-black'
+              }`}>
+              Nearby - {item.address}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -255,7 +283,8 @@ const AllRestaurantsScreen: React.FC = () => {
   };
 
   return (
-    <View className="flex-1">
+    <View
+      className={`flex-1 ${colorScheme === 'dark' ? 'bg-black' : 'bg-white'}`}>
       <Header title="All Restaurants" />
       <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       <FlatList
@@ -265,12 +294,14 @@ const AllRestaurantsScreen: React.FC = () => {
         contentContainerStyle={{paddingBottom: 20}}
         ListFooterComponent={
           filteredRestaurants.length > PAGE_SIZE ? (
-            <View className="flex-row justify-between px-4 ">
+            <View className="flex-row justify-between px-4">
               <TouchableOpacity
                 disabled={page === 1}
                 onPress={() => setPage(page - 1)}>
                 <Text
-                  className="font-extrabold"
+                  className={`font-extrabold ${
+                    colorScheme === 'dark' ? 'text-white' : 'text-black'
+                  }`}
                   style={{opacity: page === 1 ? 0.5 : 1}}>
                   Previous
                 </Text>
@@ -279,7 +310,9 @@ const AllRestaurantsScreen: React.FC = () => {
                 disabled={page * PAGE_SIZE >= filteredRestaurants.length}
                 onPress={() => setPage(page + 1)}>
                 <Text
-                  className="font-extrabold"
+                  className={`font-extrabold ${
+                    colorScheme === 'dark' ? 'text-white' : 'text-black'
+                  }`}
                   style={{
                     opacity:
                       page * PAGE_SIZE >= filteredRestaurants.length ? 0.5 : 1,

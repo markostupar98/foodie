@@ -315,15 +315,6 @@ const HomeScreen = () => {
     );
   }
 
-  // if (loadingError) {
-  //   return (
-  //     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-  //       <Text>Error loading data. Please try again.</Text>
-  //       <Button title="Retry" onPress={() => fetchData()} />
-  //     </View>
-  //   );
-  // }
-
   return (
     <Background>
       <View className="flex-1">

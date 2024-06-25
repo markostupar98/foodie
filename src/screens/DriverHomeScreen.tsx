@@ -50,8 +50,76 @@
 
 // export default DriverHomeScreen;
 
+// import React, {useEffect, useState} from 'react';
+// import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
+// import {fetchOrders} from '../services/orderService';
+// import OrderList from '../components/OrderList';
+// import Background from '../components/Background';
+// import {Order} from '../types/types';
+// import HomeHeader from '../components/HomeHeader';
+
+// const DriverHomeScreen: React.FC = () => {
+//   const [orders, setOrders] = useState<Order[]>([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     const loadOrders = async () => {
+//       setLoading(true);
+//       try {
+//         const fetchedOrders = await fetchOrders();
+//         setOrders(fetchedOrders);
+//       } catch (error) {
+//         console.error('Error fetching orders:', error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     loadOrders();
+//   }, []);
+
+//   if (loading) {
+//     return <ActivityIndicator size="large" color="#00ff00" />;
+//   }
+
+//   return (
+//     <Background>
+//       <View className="flex-1">
+//         {/* <Text className="mt-10 font-extrabold text-2xl mx-auto">
+//           Available Orders
+//         </Text> */}
+//         <HomeHeader />
+//         <ScrollView>
+//           {orders.length > 0 ? (
+//             orders.map(order => (
+//               <OrderList
+//                 key={order.id}
+//                 orderId={order.id}
+//                 restaurant={order.restaurant}
+//                 user={order.user}
+//               />
+//             ))
+//           ) : (
+//             <Text className="mt-10 text-center text-2xl">
+//               No orders available at time!
+//             </Text>
+//           )}
+//         </ScrollView>
+//       </View>
+//     </Background>
+//   );
+// };
+
+// export default DriverHomeScreen;
+
 import React, {useEffect, useState} from 'react';
-import {View, Text, ScrollView, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+  useColorScheme,
+} from 'react-native';
 import {fetchOrders} from '../services/orderService';
 import OrderList from '../components/OrderList';
 import Background from '../components/Background';
@@ -61,6 +129,7 @@ import HomeHeader from '../components/HomeHeader';
 const DriverHomeScreen: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     const loadOrders = async () => {
@@ -85,11 +154,8 @@ const DriverHomeScreen: React.FC = () => {
   return (
     <Background>
       <View className="flex-1">
-        {/* <Text className="mt-10 font-extrabold text-2xl mx-auto">
-          Available Orders
-        </Text> */}
         <HomeHeader />
-        <ScrollView>
+        <ScrollView className="flex-1">
           {orders.length > 0 ? (
             orders.map(order => (
               <OrderList
@@ -100,7 +166,10 @@ const DriverHomeScreen: React.FC = () => {
               />
             ))
           ) : (
-            <Text className="mt-10 text-center text-2xl">
+            <Text
+              className={`mt-10 text-center text-2xl ${
+                colorScheme === 'dark' ? 'text-white' : 'text-black'
+              }`}>
               No orders available at time!
             </Text>
           )}

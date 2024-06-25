@@ -2,6 +2,7 @@ import {View, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import Background from '../components/Background';
 
 const OrderPrepScreen = () => {
   const route = useRoute();
@@ -18,12 +19,14 @@ const OrderPrepScreen = () => {
     }, 3000);
   }, []);
   return (
-    <View className="flex-1 items-center bg-white justify-center">
-      <Image
-        source={require('../../assets/pedidosyapedidos.gif')}
-        className="h-80 w-80"
-      />
-    </View>
+    <Background>
+      <View className="flex-1 items-center bg-white justify-center">
+        <Image
+          source={require('../../assets/pedidosyapedidos.gif')}
+          className="h-80 w-80"
+        />
+      </View>
+    </Background>
   );
 };
 

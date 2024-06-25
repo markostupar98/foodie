@@ -1,5 +1,6 @@
-// import {View, Text, FlatList, Pressable, Image} from 'react-native';
+// // export default Categories;
 // import React, {useState} from 'react';
+// import {View, Text, FlatList, Pressable, Image} from 'react-native';
 
 // // Defining props
 // interface CategoryItem {
@@ -13,11 +14,9 @@
 //   onCategorySelect: (categoryId: number) => void;
 // }
 
-// const Categories = ({
+// const Categories: React.FC<CategoriesProps> = ({
 //   categories,
 //   onCategorySelect,
-// }: {
-//   categories: CategoriesProps;
 // }) => {
 //   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
@@ -25,6 +24,7 @@
 //     setSelectedCategory(categoryId);
 //     onCategorySelect(categoryId);
 //   };
+
 //   return (
 //     <View className="mt-5 w-full">
 //       <Text className="text-xl ml-2 text-neutral-500 font-semibold">
@@ -66,8 +66,16 @@
 // };
 
 // export default Categories;
+
 import React, {useState} from 'react';
-import {View, Text, FlatList, Pressable, Image} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  Image,
+  useColorScheme,
+} from 'react-native';
 
 // Defining props
 interface CategoryItem {
@@ -78,7 +86,7 @@ interface CategoryItem {
 
 interface CategoriesProps {
   categories: CategoryItem[];
-  onCategorySelect: (categoryId: number) => void;
+  onCategorySelect: (categoryId: number | null) => void;
 }
 
 const Categories: React.FC<CategoriesProps> = ({
@@ -86,15 +94,24 @@ const Categories: React.FC<CategoriesProps> = ({
   onCategorySelect,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const colorScheme = useColorScheme();
 
   const handlePress = (categoryId: number) => {
-    setSelectedCategory(categoryId);
-    onCategorySelect(categoryId);
+    if (selectedCategory === categoryId) {
+      setSelectedCategory(null);
+      onCategorySelect(null); // Isključuje pretragu po kategorijama
+    } else {
+      setSelectedCategory(categoryId);
+      onCategorySelect(categoryId);
+    }
   };
 
   return (
     <View className="mt-5 w-full">
-      <Text className="text-xl ml-2 text-neutral-500 font-semibold">
+      <Text
+        className={`text-xl ml-2 font-semibold ${
+          colorScheme === 'dark' ? 'text-white' : 'text-neutral-500'
+        }`}>
         Categories
       </Text>
       <View>
@@ -107,7 +124,11 @@ const Categories: React.FC<CategoriesProps> = ({
             <Pressable onPress={() => handlePress(item.id)}>
               <View
                 className={`rounded-full justify-center items-center p-3 w-15 mt-5 mx-3 h-20 ${
-                  selectedCategory === item.id ? 'bg-emerald-400' : 'bg-white'
+                  selectedCategory === item.id
+                    ? 'bg-emerald-400'
+                    : colorScheme === 'dark'
+                    ? 'bg-gray-800'
+                    : 'bg-white'
                 }`}>
                 <Image
                   className="h-14 w-14 rounded-3xl"
@@ -119,6 +140,8 @@ const Categories: React.FC<CategoriesProps> = ({
                   className={`font-semibold ${
                     selectedCategory === item.id
                       ? 'text-white'
+                      : colorScheme === 'dark'
+                      ? 'text-gray-400'
                       : 'text-neutral-500'
                   }`}>
                   {item.name}

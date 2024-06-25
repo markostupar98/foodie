@@ -80,16 +80,7 @@ const UserProfileScreen: React.FC = () => {
         <Header title="Profile" />
         <View style={styles.content}>
           <Text style={styles.text}>Full Name: {user.fullName}</Text>
-          <View style={styles.mapContainer}>
-            <WebView
-              source={{uri: '../../assets/'}}
-              style={styles.webView}
-              onMessage={event => {
-                const data = JSON.parse(event.nativeEvent.data);
-                setLocation(data);
-              }}
-            />
-          </View>
+
           {address && <Text style={styles.boldText}>City: {address}</Text>}
 
           <View style={styles.buttonContainer}>

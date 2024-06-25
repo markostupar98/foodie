@@ -1,6 +1,10 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
-import FirstCarouselImage from '../../assets/carousel/carousel1.webp';
+import firstImage from '../../assets/carousel/carousel1.webp';
+import secondImage from '../../assets/carousel/carousel2.webp';
+import thirdImage from '../../assets/carousel/carousel3.webp';
+import fourthImage from '../../assets/carousel/carousel4.webp';
+
 import Swiper from 'react-native-swiper';
 import Background from '../components/Background';
 import Button from '../components/Button';
@@ -31,32 +35,32 @@ const WelcomeScreen: React.FC = () => {
           <Swiper autoplay>
             <View className="mb-20 justify-center items-center">
               <Image
-                source={FirstCarouselImage}
-                className="h-full w-full"
-                resizeMode="contain"
-              />
-            </View>
-            {/* <View className="flex-1 mb-20 justify-center items-center">
-              <Image
-                source={require('../../../assets/carousel/carousel3.webp')}
+                source={firstImage}
                 className="h-full w-full"
                 resizeMode="contain"
               />
             </View>
             <View className="flex-1 mb-20 justify-center items-center">
               <Image
-                source={require('../../../assets/carousel/carousel2.webp')}
+                source={secondImage}
                 className="h-full w-full"
                 resizeMode="contain"
               />
             </View>
             <View className="flex-1 mb-20 justify-center items-center">
               <Image
-                source={require('../../assets/carousel/carousel1.webp')}
+                source={thirdImage}
                 className="h-full w-full"
                 resizeMode="contain"
               />
-            </View> */}
+            </View>
+            <View className="flex-1 mb-20 justify-center items-center">
+              <Image
+                source={fourthImage}
+                className="h-full w-full"
+                resizeMode="contain"
+              />
+            </View>
           </Swiper>
           <View className="flex-1">
             <View className="w-90 mx-7 my-2">
