@@ -6,6 +6,7 @@
 //   ScrollView,
 //   ActivityIndicator,
 //   Alert,
+//   useColorScheme,
 // } from 'react-native';
 // import React, {useEffect, useState} from 'react';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -45,6 +46,7 @@
 //   const userId = useSelector((state: RootState) => state.user.id);
 //   const {restaurantId} = route.params;
 //   const cartItems = useSelector((state: RootState) => state.cart.items);
+//   const colorScheme = useColorScheme();
 
 //   const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfo>({
 //     fee: 0,
@@ -157,53 +159,89 @@
 //     : 'Address not available';
 
 //   return (
-//     <View className="bg-white flex-1">
+//     <View
+//       className={`flex-1 ${colorScheme === 'dark' ? 'bg-black' : 'bg-white'}`}>
 //       <View className="relative py-4 my-5 shadow-sm">
 //         <TouchableOpacity
 //           onPress={() => navigation.goBack()}
-//           className="bg-white absolute z-10 rounded-full p-1 shadow top-5 left-2">
+//           className={`absolute z-10 rounded-full p-1 shadow top-5 left-2 ${
+//             colorScheme === 'dark' ? 'bg-gray-800' : 'bg-white'
+//           }`}>
 //           <Ionicons name="arrow-back-circle" size={40} color="#00d062" />
 //         </TouchableOpacity>
 //         <View>
-//           <Text className="text-center font-bold text-lg">Your Cart</Text>
+//           <Text
+//             className={`text-center font-bold text-lg ${
+//               colorScheme === 'dark' ? 'text-white' : 'text-black'
+//             }`}>
+//             Your Cart
+//           </Text>
 //         </View>
 //       </View>
-//       <View className="bg-emerald-300/100 opacity-50 flex-row px-4 items-center">
+//       <View
+//         className={`flex-row px-4 items-center ${
+//           colorScheme === 'dark' ? 'bg-gray-800' : 'bg-emerald-300/100'
+//         } opacity-50`}>
 //         <Image
 //           source={require('../../assets/deliveryguy.jpeg')}
 //           className="h-20 w-20 rounded-full"
 //         />
-//         <Text className="flex-1 pl-4 text-neutral-600">
+//         <Text
+//           className={`flex-1 pl-4 ${
+//             colorScheme === 'dark' ? 'text-white' : 'text-neutral-600'
+//           }`}>
 //           Deliver in {deliveryInfo.time.toFixed(0)} minutes To {userAddress}
 //         </Text>
 //       </View>
 //       <ScrollView
 //         showsVerticalScrollIndicator={false}
 //         contentContainerStyle={{paddingBottom: 50}}
-//         className="bg-white pt-5">
+//         className={`pt-5 ${colorScheme === 'dark' ? 'bg-black' : 'bg-white'}`}>
 //         {cartItems.map((dish, index) => (
 //           <View
 //             key={index}
-//             className="flex-row items-center space-x-3 py-2 px-2 bg-white rounded-3xl mx-2 mb-3 shadow-md">
-//             <Text className="font-bold text-emerald-700">
+//             className={`flex-row items-center space-x-3 py-2 px-2 ${
+//               colorScheme === 'dark' ? 'bg-gray-800' : 'bg-white'
+//             } rounded-3xl mx-2 mb-3 shadow-md`}>
+//             <Text
+//               className={`font-bold ${
+//                 colorScheme === 'dark' ? 'text-emerald-300' : 'text-emerald-700'
+//               }`}>
 //               {dish.quantity} x
 //             </Text>
 //             <Image
 //               className="h-14 w-14 rounded-full"
 //               source={{uri: dish.image}}
 //             />
-//             <Text className="flex-1 font-bold text-gray-600">{dish.name}</Text>
-//             <Text className="font-semibold text-neutral-600 text-base">
+//             <Text
+//               className={`flex-1 font-bold ${
+//                 colorScheme === 'dark' ? 'text-white' : 'text-gray-600'
+//               }`}>
+//               {dish.name}
+//             </Text>
+//             <Text
+//               className={`font-semibold ${
+//                 colorScheme === 'dark' ? 'text-white' : 'text-neutral-600'
+//               } text-base`}>
 //               $ {dish.price}
 //             </Text>
 //             <TouchableOpacity
-//               className="rounded-full bg-emerald-400"
+//               className={`rounded-full ${
+//                 colorScheme === 'dark' ? 'bg-emerald-500' : 'bg-emerald-400'
+//               }`}
 //               onPress={() => handleUpdateQuantity(dish.id, -1)}>
 //               <Entypo name="circle-with-minus" size={20} color="white" />
 //             </TouchableOpacity>
-//             <Text className="px-3">{dish.quantity}</Text>
+//             <Text
+//               className={`px-3 ${
+//                 colorScheme === 'dark' ? 'text-white' : 'text-black'
+//               }`}>
+//               {dish.quantity}
+//             </Text>
 //             <TouchableOpacity
-//               className="rounded-full bg-emerald-400"
+//               className={`rounded-full ${
+//                 colorScheme === 'dark' ? 'bg-emerald-500' : 'bg-emerald-400'
+//               }`}
 //               onPress={() => handleUpdateQuantity(dish.id, 1)}>
 //               <Entypo name="circle-with-plus" size={20} color="white" />
 //             </TouchableOpacity>
@@ -211,7 +249,10 @@
 //         ))}
 //       </ScrollView>
 //       {/* Totals */}
-//       <View className="p-6 px-8 rounded-t-3xl space-y-4 bg-emerald-500">
+//       <View
+//         className={`p-6 px-8 rounded-t-3xl space-y-4 ${
+//           colorScheme === 'dark' ? 'bg-gray-800' : 'bg-emerald-500'
+//         }`}>
 //         <View className="flex-row justify-between">
 //           <Text className="text-white">Subtotal</Text>
 //           <Text className="text-white font-extrabold">
@@ -445,56 +486,65 @@ const CartScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 50}}
         className={`pt-5 ${colorScheme === 'dark' ? 'bg-black' : 'bg-white'}`}>
-        {cartItems.map((dish, index) => (
-          <View
-            key={index}
-            className={`flex-row items-center space-x-3 py-2 px-2 ${
-              colorScheme === 'dark' ? 'bg-gray-800' : 'bg-white'
-            } rounded-3xl mx-2 mb-3 shadow-md`}>
-            <Text
-              className={`font-bold ${
-                colorScheme === 'dark' ? 'text-emerald-300' : 'text-emerald-700'
-              }`}>
-              {dish.quantity} x
-            </Text>
-            <Image
-              className="h-14 w-14 rounded-full"
-              source={{uri: dish.image}}
-            />
-            <Text
-              className={`flex-1 font-bold ${
-                colorScheme === 'dark' ? 'text-white' : 'text-gray-600'
-              }`}>
-              {dish.name}
-            </Text>
-            <Text
-              className={`font-semibold ${
-                colorScheme === 'dark' ? 'text-white' : 'text-neutral-600'
-              } text-base`}>
-              $ {dish.price}
-            </Text>
-            <TouchableOpacity
-              className={`rounded-full ${
-                colorScheme === 'dark' ? 'bg-emerald-500' : 'bg-emerald-400'
-              }`}
-              onPress={() => handleUpdateQuantity(dish.id, -1)}>
-              <Entypo name="circle-with-minus" size={20} color="white" />
-            </TouchableOpacity>
-            <Text
-              className={`px-3 ${
-                colorScheme === 'dark' ? 'text-white' : 'text-black'
-              }`}>
-              {dish.quantity}
-            </Text>
-            <TouchableOpacity
-              className={`rounded-full ${
-                colorScheme === 'dark' ? 'bg-emerald-500' : 'bg-emerald-400'
-              }`}
-              onPress={() => handleUpdateQuantity(dish.id, 1)}>
-              <Entypo name="circle-with-plus" size={20} color="white" />
-            </TouchableOpacity>
-          </View>
-        ))}
+        {cartItems.map((dish, index) => {
+          console.log('Dish:', dish); // Log dish data to debug
+          return (
+            <View
+              key={index}
+              className={`flex-row items-center space-x-3 py-2 px-2 ${
+                colorScheme === 'dark' ? 'bg-gray-800' : 'bg-white'
+              } rounded-3xl mx-2 mb-3 shadow-md`}>
+              <Text
+                className={`font-bold ${
+                  colorScheme === 'dark'
+                    ? 'text-emerald-300'
+                    : 'text-emerald-700'
+                }`}>
+                {dish.quantity} x
+              </Text>
+              {dish.image ? (
+                <Image
+                  className="h-14 w-14 rounded-full"
+                  source={{uri: dish.image}}
+                />
+              ) : (
+                <View className="h-14 w-14 rounded-full bg-gray-300" />
+              )}
+              <Text
+                className={`flex-1 font-bold ${
+                  colorScheme === 'dark' ? 'text-white' : 'text-gray-600'
+                }`}>
+                {dish.name}
+              </Text>
+              <Text
+                className={`font-semibold ${
+                  colorScheme === 'dark' ? 'text-white' : 'text-neutral-600'
+                } text-base`}>
+                $ {dish.price}
+              </Text>
+              <TouchableOpacity
+                className={`rounded-full ${
+                  colorScheme === 'dark' ? 'bg-emerald-500' : 'bg-emerald-400'
+                }`}
+                onPress={() => handleUpdateQuantity(dish.id, -1)}>
+                <Entypo name="circle-with-minus" size={20} color="white" />
+              </TouchableOpacity>
+              <Text
+                className={`px-3 ${
+                  colorScheme === 'dark' ? 'text-white' : 'text-black'
+                }`}>
+                {dish.quantity}
+              </Text>
+              <TouchableOpacity
+                className={`rounded-full ${
+                  colorScheme === 'dark' ? 'bg-emerald-500' : 'bg-emerald-400'
+                }`}
+                onPress={() => handleUpdateQuantity(dish.id, 1)}>
+                <Entypo name="circle-with-plus" size={20} color="white" />
+              </TouchableOpacity>
+            </View>
+          );
+        })}
       </ScrollView>
       {/* Totals */}
       <View

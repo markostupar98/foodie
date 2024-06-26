@@ -134,7 +134,13 @@ const DishRow: React.FC<DishRowProps> = ({item}) => {
 
   const handleAddToCart = () => {
     dispatch(
-      addItem({id: item.id, name: item.name, price: item.price, quantity: 1}),
+      addItem({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: 1,
+        image: item.image,
+      }),
     );
   };
 
