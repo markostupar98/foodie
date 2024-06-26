@@ -114,33 +114,30 @@ const OrderList: React.FC<OrderListProps> = ({
   };
 
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('OrderDetailsScreen', {orderId})}>
-      <View
-        className={`mx-5 w-50 p-2 mt-10 rounded-3xl shadow-lg ${
-          status === 'taken' ? 'bg-green-300' : 'bg-white'
-        }`}>
-        <View className="w-full flex-row">
-          <View className="px-3 my-2 space-y-2 w-[70%]">
-            <Text className="font-medium">From - {restaurant.name}</Text>
-            <View className="flex-row items-center space-x-1">
-              <FontAwesome name="map-marker" size={24} color="gray" />
-              <Text className="text-xs font-semibold">
-                Delivery to - {user.address}
-              </Text>
-            </View>
-          </View>
-          <View className="w-[30%] my-auto items-center">
-            {status !== 'taken' && (
-              <TouchableOpacity onPress={handleTakeOrder}>
-                <Ionicons name="checkbox" size={40} color="green" />
-                <Text className="mt-1 font-extrabold">Take order</Text>
-              </TouchableOpacity>
-            )}
+    <View
+      className={`mx-5 w-50 p-2 mt-10 rounded-3xl shadow-lg ${
+        status === 'taken' ? 'bg-green-300' : 'bg-white'
+      }`}>
+      <View className="w-full flex-row">
+        <View className="px-3 my-2 space-y-2 w-[70%]">
+          <Text className="font-medium">From - {restaurant.name}</Text>
+          <View className="flex-row items-center space-x-1">
+            <FontAwesome name="map-marker" size={24} color="gray" />
+            <Text className="text-xs font-semibold">
+              Delivery to - {user.address}
+            </Text>
           </View>
         </View>
+        <View className="w-[30%] my-auto items-center">
+          {status !== 'taken' && (
+            <TouchableOpacity onPress={handleTakeOrder}>
+              <Ionicons name="checkbox" size={40} color="green" />
+              <Text className="mt-1 font-extrabold">Take order</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
