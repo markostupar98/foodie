@@ -81,6 +81,7 @@ import Background from '../components/Background';
 import {Order} from '../types/types';
 import HomeHeader from '../components/HomeHeader';
 import {useSelector} from 'react-redux';
+import DriverHeader from '../components/DriverHeader';
 
 const DriverHomeScreen: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -119,7 +120,7 @@ const DriverHomeScreen: React.FC = () => {
   return (
     <Background>
       <View className="flex-1">
-        <HomeHeader />
+        <DriverHeader />
         <ScrollView className="flex-1">
           {orders.length > 0 ? (
             orders.map(order => (

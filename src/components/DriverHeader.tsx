@@ -5,7 +5,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../types/RootStockParams';
 
-const HomeHeader: React.FC = () => {
+const DriverHeader: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
@@ -18,7 +18,7 @@ const HomeHeader: React.FC = () => {
       </View>
       <View className="items-center justify-center mr-5">
         <AntDesign
-          onPress={() => navigation.navigate('UserProfileScreen')}
+          onPress={() => navigation.navigate('DriverProfileScreen')}
           name="user"
           size={24}
           color="white"
@@ -28,4 +28,4 @@ const HomeHeader: React.FC = () => {
   );
 };
 
-export default HomeHeader;
+export default DriverHeader;

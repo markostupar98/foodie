@@ -16,6 +16,7 @@ import OrderPrepScreen from '../screens/OrderPrepScreen';
 import DriverHomeScreen from '../screens/DriverHomeScreen';
 import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import {useSelector} from 'react-redux';
+import DriverProfileScreen from '../screens/DriverProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -80,6 +81,10 @@ const Navigation = () => {
             <Stack.Screen
               name="OrderDetailsScreen"
               component={OrderDetailsScreen}
+            />
+            <Stack.Screen
+              name="DriverProfileScreen"
+              component={DriverProfileScreen}
             />
           </>
         )}
