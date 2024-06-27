@@ -14,7 +14,6 @@ import AllRestaurantsScreen from '../screens/AllRestaurantScreen';
 import DeliveryScreen from '../screens/DeliveryScreen';
 import OrderPrepScreen from '../screens/OrderPrepScreen';
 import DriverHomeScreen from '../screens/DriverHomeScreen';
-import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import {useSelector} from 'react-redux';
 import DriverProfileScreen from '../screens/DriverProfileScreen';
 
@@ -77,10 +76,6 @@ const Navigation = () => {
             <Stack.Screen
               name="DriverHomeScreen"
               component={DriverHomeScreen}
-            />
-            <Stack.Screen
-              name="OrderDetailsScreen"
-              component={OrderDetailsScreen}
             />
             <Stack.Screen
               name="DriverProfileScreen"

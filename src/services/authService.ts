@@ -39,6 +39,25 @@ export const signupDriver = async (
   }
 };
 
+// export const signinDriver = async (
+//   email: string,
+//   password: string,
+// ): Promise<SignInDriverResponse> => {
+//   try {
+//     const response = await axios.post(`${BASE_URL}/api/auth/signin/driver`, {
+//       email,
+//       password,
+//     });
+//     return {
+//       token: response.data.token,
+//       driverId: response.data.driverId,
+//       error: null,
+//     };
+//   } catch (error: any) {
+//     console.error('Error signing in driver:', error);
+//     return {token: null, driverId: null, error: error.message};
+//   }
+// };
 export const signinDriver = async (
   email: string,
   password: string,
@@ -59,6 +78,29 @@ export const signinDriver = async (
   }
 };
 
+// export const signInUser = async (
+//   email: string,
+//   password: string,
+// ): Promise<SignInUserResponse> => {
+//   try {
+//     const response = await axios.post(`${BASE_URL}/api/auth/signin`, {
+//       email,
+//       password,
+//     });
+//     if (response.data) {
+//       return {
+//         token: response.data.token,
+//         userId: response.data.userId,
+//         error: null,
+//       };
+//     } else {
+//       return {token: null, userId: null, error: 'Invalid credentials'};
+//     }
+//   } catch (error: any) {
+//     console.error('Error signing in user:', error);
+//     return {token: null, userId: null, error: error.message};
+//   }
+// };
 export const signInUser = async (
   email: string,
   password: string,
@@ -100,8 +142,12 @@ export const signUpUser = async (
       role: 'user',
     });
 
-    if (response.status === 200) {
-      return {success: true, message: 'You can log in to your account.'};
+    if (response.status === 201) {
+      return {
+        success: true,
+        message: 'User created successfully',
+        userId: response.data.userId,
+      };
     } else {
       return {
         success: false,
@@ -109,6 +155,7 @@ export const signUpUser = async (
       };
     }
   } catch (error: any) {
+    console.error('Error signing up user:', error);
     return {
       success: false,
       message: error.response ? error.response.data.message : error.message,

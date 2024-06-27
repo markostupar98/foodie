@@ -27,10 +27,7 @@ import {Provider} from 'react-redux';
 import {store} from './src/store';
 import messaging from '@react-native-firebase/messaging';
 import notifee, {AndroidImportance} from '@notifee/react-native';
-
-import {Alert} from 'react-native';
-import {PermissionsAndroid} from 'react-native';
-
+import {Alert, PermissionsAndroid} from 'react-native';
 import Navigation from './src/components/Navigation';
 
 const App = () => {
@@ -38,13 +35,17 @@ const App = () => {
     // Request permissions on Android
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    ).then(result => {
-      if (result === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('Notification permission granted.');
-      } else {
-        console.log('Notification permission denied.');
-      }
-    });
+    )
+      .then(result => {
+        if (result === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Notification permission granted.');
+        } else {
+          console.error('Notification permission denied.');
+        }
+      })
+      .catch(error => {
+        console.error('Error requesting notification permission:', error);
+      });
 
     // Request permissions on iOS
     messaging()
@@ -56,7 +57,15 @@ const App = () => {
 
         if (enabled) {
           console.log('Authorization status:', authStatus);
+        } else {
+          console.error('Notification permission denied on iOS.');
         }
+      })
+      .catch(error => {
+        console.error(
+          'Error requesting notification permission on iOS:',
+          error,
+        );
       });
 
     // Get the device token
@@ -65,6 +74,9 @@ const App = () => {
       .then(token => {
         console.log('FCM Token:', token);
         // Send the token to your server to store it
+      })
+      .catch(error => {
+        console.error('Error getting FCM token:', error);
       });
 
     // Listen for messages
@@ -77,7 +89,7 @@ const App = () => {
       displayNotification(remoteMessage);
     });
 
-    return unsubscribe;
+    return () => unsubscribe();
   }, []);
 
   const displayNotification = async remoteMessage => {
@@ -89,16 +101,24 @@ const App = () => {
     });
 
     // Display a notification
-    await notifee.displayNotification({
-      title: remoteMessage.notification.title,
-      body: remoteMessage.notification.body,
-      android: {
-        channelId: 'default',
-        pressAction: {
-          id: 'default',
-        },
-      },
-    });
+    if (remoteMessage.notification) {
+      await notifee
+        .displayNotification({
+          title: remoteMessage.notification.title,
+          body: remoteMessage.notification.body,
+          android: {
+            channelId: 'default',
+            pressAction: {
+              id: 'default',
+            },
+          },
+        })
+        .catch(error => {
+          console.error('Error displaying notification:', error);
+        });
+    } else {
+      console.error('Remote message notification payload is missing.');
+    }
   };
 
   return (

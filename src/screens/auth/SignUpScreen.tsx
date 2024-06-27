@@ -173,24 +173,22 @@ const SignUpScreen: React.FC = () => {
   const signUpWithEmail = async () => {
     setLoading(true);
     try {
-      const {success, message} = await signUpUser(
+      const {success, message, userId} = await signUpUser(
         email,
         password,
         fullName,
         username,
         address,
       );
-      setLoading(false);
-      if (success) {
-        Alert.alert('Success', message);
-        navigation.navigate('SignInScreen');
-      } else {
-        throw new Error(message);
-      }
+
+      if (!success) throw new Error(message);
+
+      Alert.alert('Success', message);
+      navigation.navigate('SignInScreen');
     } catch (error: any) {
-      setLoading(false);
       Alert.alert('Error', error.message);
-      console.log(error.message, error.response);
+    } finally {
+      setLoading(false);
     }
   };
 
