@@ -9,6 +9,7 @@ export const createOrder = async (
   deliveryAddress: string,
   cartItems: OrderItem[],
   total: number,
+  // fcmToken: string,
 ): Promise<Order> => {
   try {
     const response = await axios.post(`${BASE_URL}/api/orders`, {
@@ -17,6 +18,7 @@ export const createOrder = async (
       deliveryAddress,
       cartItems,
       total,
+      // fcmToken,
     });
     return response.data;
   } catch (error) {

@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface DriverState {
-  id: string | null;
+  id: number | null;
   token: string | null;
   isLoggedIn: boolean;
 }
@@ -16,7 +16,7 @@ const driverSlice = createSlice({
   name: 'driver',
   initialState,
   reducers: {
-    setDriver: (state, action: PayloadAction<{id: string; token: string}>) => {
+    setDriver: (state, action: PayloadAction<{id: number; token: string}>) => {
       state.id = action.payload.id;
       state.token = action.payload.token;
       state.isLoggedIn = true;
