@@ -438,6 +438,7 @@ const CartScreen: React.FC = () => {
       });
     } catch (error: any) {
       Alert.alert('Error', error.message);
+      x;
     } finally {
       setLoading(false);
     }

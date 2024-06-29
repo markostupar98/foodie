@@ -9,7 +9,6 @@ export const createOrder = async (
   deliveryAddress: string,
   cartItems: OrderItem[],
   total: number,
-  // fcmToken: string,
 ): Promise<Order> => {
   try {
     const response = await axios.post(`${BASE_URL}/api/orders`, {
@@ -18,12 +17,29 @@ export const createOrder = async (
       deliveryAddress,
       cartItems,
       total,
-      // fcmToken,
     });
     return response.data;
-  } catch (error) {
-    console.error('Error creating order:', error);
-    throw error;
+  } catch (error: any) {
+    if (error.response) {
+      // Request made and server responded
+      console.error('Error creating order:', error.response.data);
+      console.error('Status:', error.response.status);
+      console.error('Headers:', error.response.headers);
+      throw new Error(
+        `Error creating order: ${
+          error.response.data.message || error.response.data
+        }`,
+      );
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('Error creating order: No response received');
+      console.error('Request:', error.request);
+      throw new Error('Error creating order: No response received from server');
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error creating order:', error.message);
+      throw new Error(`Error creating order: ${error.message}`);
+    }
   }
 };
 
@@ -62,8 +78,28 @@ export const assignDriverToOrder = async (
       driverId,
     });
     return response.data;
-  } catch (error) {
-    console.error('Error assigning driver to order:', error);
-    throw error;
+  } catch (error: any) {
+    if (error.response) {
+      // Request made and server responded
+      console.error('Error assigning driver to order:', error.response.data);
+      console.error('Status:', error.response.status);
+      console.error('Headers:', error.response.headers);
+      throw new Error(
+        `Error assigning driver to order: ${
+          error.response.data.message || error.response.data
+        }`,
+      );
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('Error assigning driver to order: No response received');
+      console.error('Request:', error.request);
+      throw new Error(
+        'Error assigning driver to order: No response received from server',
+      );
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error assigning driver to order:', error.message);
+      throw new Error(`Error assigning driver to order: ${error.message}`);
+    }
   }
 };

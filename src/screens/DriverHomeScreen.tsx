@@ -114,13 +114,12 @@ const DriverHomeScreen: React.FC = () => {
         // Get the device token
         const token = await messaging().getToken();
         console.log('FCM Token:', token);
-        registerFCMTokenForDriver(driverId, token); // Registruj token kada je driverId dostupan
-
+        registerFCMTokenForDriver(driverId, token);
         // Listen for token refresh
         const unsubscribeFromTokenRefresh = messaging().onTokenRefresh(
           token => {
             console.log('FCM Token refreshed:', token);
-            registerFCMTokenForDriver(driverId, token); // Registruj osvežen token kada je driverId dostupan
+            registerFCMTokenForDriver(driverId, token);
           },
         );
 
