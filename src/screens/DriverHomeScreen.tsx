@@ -167,7 +167,7 @@ const DriverHomeScreen: React.FC = () => {
   const handleOrderTaken = (orderId: number) => {
     setOrders(
       orders.map(order =>
-        order.id === orderId ? {...order, status: 'taken'} : order,
+        order.id === orderId ? {...order, status: 'delivering'} : order,
       ),
     );
   };
@@ -224,7 +224,7 @@ const DriverHomeScreen: React.FC = () => {
           ) : (
             <Text
               className={`mt-10 text-center text-2xl ${
-                colorScheme === 'dark' ? 'text-white' : 'text-black'
+                colorScheme === 'dark' ? 'text-white' : 'text-neutral-700'
               }`}>
               No orders available at time!
             </Text>
