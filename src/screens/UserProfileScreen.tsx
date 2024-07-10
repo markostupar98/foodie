@@ -28,11 +28,6 @@ const UserProfileScreen: React.FC = () => {
   const userId = useSelector((state: RootState) => state.user.id);
   const [user, setUser] = useState<any>(null);
   const dispatch = useDispatch();
-  const [location, setLocation] = useState<any>({
-    latitude: 44.7722,
-    longitude: 17.191,
-  });
-  const [address, setAddress] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [editableField, setEditableField] = useState('');
   const [newData, setNewData] = useState('');
@@ -44,13 +39,6 @@ const UserProfileScreen: React.FC = () => {
         console.error(error);
       } else {
         setUser(profile);
-        if (profile.latitude && profile.longitude) {
-          setLocation({
-            latitude: profile.latitude,
-            longitude: profile.longitude,
-          });
-        }
-        setAddress(profile.address);
       }
     };
     fetchUser();
@@ -89,22 +77,6 @@ const UserProfileScreen: React.FC = () => {
     );
   }
 
-  const saveLocation = async () => {
-    if (user) {
-      const {profile, error} = await updateUserProfile(user.id, {
-        latitude: location.latitude,
-        longitude: location.longitude,
-        address: address,
-      });
-      if (error) {
-        Alert.alert('Error', error.message);
-      } else {
-        Alert.alert('Success', 'Location updated successfully!');
-        setUser(profile);
-      }
-    }
-  };
-
   return (
     <Background>
       <View className="flex-1">
@@ -131,7 +103,7 @@ const UserProfileScreen: React.FC = () => {
           </View>
 
           <View className="flex-row items-center mb-3">
-            <Text className="mt-2 text-lg mr-10">Address: {address}</Text>
+            <Text className="mt-2 text-lg mr-10">Address: {user.address}</Text>
             <TouchableOpacity
               onPress={() => handleEdit('address', address || '')}>
               <Ionicons name="pencil" size={28} color="#000" className="ml-5" />
@@ -147,14 +119,16 @@ const UserProfileScreen: React.FC = () => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}>
-          <View className="m-5 bg-white rounded-2xl p-9 items-center shadow-2xl">
+          <View className="m-5 bg-white rounded-2xl p-5  items-center shadow-2xl">
             <TextInput
               className="h-10 border border-gray-400 mb-5 w-full px-2"
               value={newData}
               onChangeText={setNewData}
               placeholder={`Enter new ${editableField}`}
             />
-            <Button title="Save" onPress={handleSave} />
+            <View className="mb-5 w-25">
+              <Button title="Save" onPress={handleSave} />
+            </View>
             <Button title="Cancel" onPress={() => setModalVisible(false)} />
           </View>
         </Modal>

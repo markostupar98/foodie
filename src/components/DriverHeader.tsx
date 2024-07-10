@@ -16,14 +16,6 @@ const DriverHeader: React.FC = () => {
       <View className="items-center justify-center mx-auto">
         <Text className="text-xl font-bold text-white">FoodieGo</Text>
       </View>
-      <View className="items-center justify-center mr-5">
-        <AntDesign
-          onPress={() => navigation.navigate('DriverProfileScreen')}
-          name="user"
-          size={24}
-          color="white"
-        />
-      </View>
     </SafeAreaView>
   );
 };

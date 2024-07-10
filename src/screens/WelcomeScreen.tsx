@@ -22,7 +22,7 @@ const WelcomeScreen: React.FC = () => {
 
   return (
     <Background>
-      <View className="flex-1 justify-start pt-[60px] items-center">
+      <View className="flex-1 justify-start pt-[20px] items-center">
         <View className="my-5">
           <Text className="text-xl font-bold text-emerald-300/100">
             Discover restaurants
@@ -65,22 +65,17 @@ const WelcomeScreen: React.FC = () => {
           <View className="flex-1">
             <View className="w-90 mx-7 my-2">
               <Button
-                title="Sign In"
+                title="Sign In As User"
                 onPress={() => {
                   navigation.navigate('SignInScreen');
                 }}
               />
             </View>
-            <View className="mt-5 p-5">
-              <Text className="text-neutral-400">
-                If you don't have an account
-              </Text>
-            </View>
-            <View className="justify-end flex-row mx-5">
+            <View className="w-90 mx-7 my-2">
               <Button
-                title="Create account"
+                title="Sign In As Driver"
                 onPress={() => {
-                  navigation.navigate('SignUpScreen');
+                  navigation.navigate('DriverSignInScreen');
                 }}
               />
             </View>
